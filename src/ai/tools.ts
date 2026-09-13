@@ -104,62 +104,70 @@ export const ninaToolsDefinitions = [
 export async function executeTool(name: string, args: Record<string, any>): Promise<any> {
   const db = getDatabase();
 
-  switch (name) {
-    case 'buscar_lead_crm': {
-      const id = args.identificador;
-      let lead = await leadService.getLeadById(id);
-      if (!lead) lead = await leadService.getLeadByPhone(id);
-      const ags = lead ? await db.agendamentos.getByLeadId(lead.id) : [];
-      return { lead, agendamentos: ags };
-    }
-
-    case 'buscar_closer_responsavel': {
-      const details = await bookingService.getBookingDetails(args.agendamento_id);
-      return details ? details.closer : null;
-    }
-
-    case 'buscar_case_por_segmento': {
-      const caseItem = await knowledgeService.getCaseBySegment(args.segmento);
-      return caseItem || { message: 'Nenhum case específico encontrado, use apresentação padrão.' };
-    }
-
-    case 'atualizar_status_crm': {
-      if (args.status === 'confirmado' || args.status === 'confirmado_pelo_lead') {
-        await leadService.markAsConfirmed(args.lead_id);
-        const ags = await db.agendamentos.getByLeadId(args.lead_id);
-        if (ags.length > 0) {
-          await bookingService.confirmBooking(ags[0].id);
-        }
-      } else if (args.status.includes('cancela')) {
-        await leadService.updateStatus(args.lead_id, 'cancelado');
-        const ags = await db.agendamentos.getByLeadId(args.lead_id);
-        if (ags.length > 0) {
-          await bookingService.cancelBooking(ags[0].id, 'Cancelamento solicitado pelo lead');
-        }
+  try {
+    switch (name) {
+      case 'buscar_lead_crm': {
+        const id = args.identificador;
+        let lead = await leadService.getLeadById(id);
+        if (!lead) lead = await leadService.getLeadByPhone(id);
+        const ags = lead ? await db.agendamentos.getByLeadId(lead.id) : [];
+        return { lead, agendamentos: ags };
       }
-      return { success: true, status: args.status };
-    }
 
-    case 'criar_evento_calendario': {
-      return {
-        success: true,
-        calendarEventId: `cal-${Date.now()}`,
-        linkMeet: 'https://meet.google.com/abc-nina-demo'
-      };
-    }
+      case 'buscar_closer_responsavel': {
+        const details = await bookingService.getBookingDetails(args.agendamento_id);
+        return details ? details.closer : null;
+      }
 
-    case 'enviar_whatsapp': {
-      return { success: true, messageId: `wamid-${Date.now()}` };
-    }
+      case 'buscar_case_por_segmento': {
+        const caseItem = await knowledgeService.getCaseBySegment(args.segmento);
+        return caseItem || { message: 'Nenhum case específico encontrado, use apresentação padrão.' };
+      }
 
-    case 'gerar_audio': {
-      return {
-        success: true,
-        audioUrl: `https://storage.empresa.com/audios/nina-${Date.now()}.ogg`
-      };
-    }
+      case 'atualizar_status_crm': {
+        if (args.status === 'confirmado' || args.status === 'confirmado_pelo_lead') {
+          await leadService.markAsConfirmed(args.lead_id);
+          const ags = await db.agendamentos.getByLeadId(args.lead_id);
+          if (ags.length > 0) {
+            await bookingService.confirmBooking(ags[0].id);
+          }
+        } else if (args.status.includes('cancela')) {
+          await leadService.updateStatus(args.lead_id, 'cancelado');
+          const ags = await db.agendamentos.getByLeadId(args.lead_id);
+          if (ags.length > 0) {
+            await bookingService.cancelBooking(ags[0].id, 'Cancelamento solicitado pelo lead');
+          }
+        }
+        return { success: true, status: args.status };
+      }
 
-    default:
-      return { error: `Ferramenta desconhecida: ${name}` };
+      case 'criar_evento_calendario': {
+        return {
+          success: true,
+          calendarEventId: `cal-${Date.now()}`,
+          linkMeet: 'https://meet.google.com/abc-nina-demo'
+        };
+      }
+
+      case 'enviar_whatsapp': {
+        return { success: true, messageId: `wamid-${Date.now()}` };
+      }
+
+      case 'gerar_audio': {
+        return {
+          success: true,
+          audioUrl: `https://storage.empresa.com/audios/nina-${Date.now()}.ogg`
+        };
+      }
+
+      default:
+        return { erro: true, mensagem: `Ferramenta desconhecida: ${name}`, codigo: 'TOOL_NOT_FOUND' };
+    }
+  } catch (err: any) {
+    return {
+      erro: true,
+      mensagem: err.message || 'Erro inesperado na execução da ferramenta',
+      codigo: 'TOOL_EXECUTION_ERROR'
+    };
   }
 }

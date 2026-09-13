@@ -168,3 +168,41 @@ VALUES
     ('b2b_saas', 'TechFlow Soluções', 'Show rate de 22% para 53% em demos', 'Automatizou o follow-up pré-call e aumentou o fechamento de contratos de software corporativo.'),
     ('educacao', 'Instituto Aprender+', '3x mais matrículas no vestibular agendado', 'Recuperou candidatos que deixaram o formulário incompleto e manteve contato constante até o dia da prova.')
 ON CONFLICT DO NOTHING;
+
+-- ==============================================================================
+-- 4. SEGURANÇA & ROW LEVEL SECURITY (RLS) — PADRÃO LGPD
+-- ==============================================================================
+
+-- Habilita RLS em todas as tabelas com dados de leads e operação
+ALTER TABLE leads ENABLE ROW LEVEL SECURITY;
+ALTER TABLE agendamentos ENABLE ROW LEVEL SECURITY;
+ALTER TABLE interacoes ENABLE ROW LEVEL SECURITY;
+ALTER TABLE closers ENABLE ROW LEVEL SECURITY;
+ALTER TABLE cases_sucesso ENABLE ROW LEVEL SECURITY;
+ALTER TABLE fila_agendamentos ENABLE ROW LEVEL SECURITY;
+
+-- Políticas de acesso total exclusivamente para o backend (service_role)
+-- Nenhum acesso direto/anônimo é permitido via internet pública
+DO $$ BEGIN
+    CREATE POLICY "service_role_full_leads" ON leads FOR ALL USING (auth.role() = 'service_role');
+EXCEPTION WHEN duplicate_object THEN null; END $$;
+
+DO $$ BEGIN
+    CREATE POLICY "service_role_full_agendamentos" ON agendamentos FOR ALL USING (auth.role() = 'service_role');
+EXCEPTION WHEN duplicate_object THEN null; END $$;
+
+DO $$ BEGIN
+    CREATE POLICY "service_role_full_interacoes" ON interacoes FOR ALL USING (auth.role() = 'service_role');
+EXCEPTION WHEN duplicate_object THEN null; END $$;
+
+DO $$ BEGIN
+    CREATE POLICY "service_role_full_closers" ON closers FOR ALL USING (auth.role() = 'service_role');
+EXCEPTION WHEN duplicate_object THEN null; END $$;
+
+DO $$ BEGIN
+    CREATE POLICY "service_role_full_cases" ON cases_sucesso FOR ALL USING (auth.role() = 'service_role');
+EXCEPTION WHEN duplicate_object THEN null; END $$;
+
+DO $$ BEGIN
+    CREATE POLICY "service_role_full_fila" ON fila_agendamentos FOR ALL USING (auth.role() = 'service_role');
+EXCEPTION WHEN duplicate_object THEN null; END $$;
