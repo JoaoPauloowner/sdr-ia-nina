@@ -52,7 +52,7 @@ export function loadConfig(): AppConfig {
   const twilioSid = process.env.TWILIO_ACCOUNT_SID || '';
 
   return {
-    port: parseInt(process.env.PORT || '3000', 10),
+    port: parseInt(process.env.PORT || '3333', 10),
     nodeEnv: process.env.NODE_ENV || 'development',
     supabase: {
       url: supabaseUrl,
