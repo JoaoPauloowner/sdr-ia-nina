@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nina SDR IA — Painel Operacional em Tempo Real</title>
+  <meta name="description" content="Dashboard operacional do agente autônomo Nina para monitoramento de comparecimento em reuniões (Show Rate) e prevenção de no-show.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Header Principal -->
+    <header class="main-header">
+      <div class="brand">
+        <div class="logo-icon">🤖</div>
+        <div>
+          <h1>Nina SDR IA</h1>
+          <p class="subtitle">Agente de Pré-Vendas Autônomo & Prevenção de No-Show</p>
+        </div>
+      </div>
+      <div class="header-actions">
+        <div class="status-indicator">
+          <span class="pulse-dot"></span>
+          <span class="status-text">Motor Determinístico Ativo</span>
+        </div>
+        <button id="btn-trigger-tick" class="btn btn-secondary">
+          <span class="btn-icon">⚡</span> Rodar Scheduler (Tick)
+        </button>
+      </div>
+    </header>
+
+    <!-- Grade de Métricas (KPIs) -->
+    <section class="kpi-grid">
+      <div class="kpi-card highlight">
+        <div class="kpi-header">
+          <span class="kpi-title">Taxa de Comparecimento (Show Rate)</span>
+          <span class="kpi-badge">Meta: 50%</span>
+        </div>
+        <div class="kpi-value" id="kpi-show-rate">--%</div>
+        <div class="kpi-footer">
+          <span class="trend positive">▲ Case: 21% → 40%+</span>
+          <span class="kpi-sub">Redução de No-Show</span>
+        </div>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-header">
+          <span class="kpi-title">Total de Agendamentos</span>
+          <span class="kpi-icon">📅</span>
+        </div>
+        <div class="kpi-value" id="kpi-agendamentos">0</div>
+        <div class="kpi-footer">
+          <span id="kpi-confirmados" class="tag tag-success">0 Confirmados</span>
+          <span id="kpi-cancelados" class="tag tag-danger">0 Cancelados</span>
+        </div>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-header">
+          <span class="kpi-title">Radar do Silêncio</span>
+          <span class="kpi-icon">📡</span>
+        </div>
+        <div class="kpi-value" id="kpi-silencio">0</div>
+        <div class="kpi-footer">
+          <span class="kpi-sub">Leads sem resposta > 6h na régua específica</span>
+        </div>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-header">
+          <span class="kpi-title">Recuperação de Abandono</span>
+          <span class="kpi-icon">🎯</span>
+        </div>
+        <div class="kpi-value" id="kpi-abandonos">0</div>
+        <div class="kpi-footer">
+          <span class="kpi-sub">Capturas salvas em até 15 minutos</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Conteúdo Principal Dividido -->
+    <main class="main-content">
+      <!-- Painel Esquerdo: Feed de Conversas da Nina -->
+      <section class="panel feed-panel">
+        <div class="panel-header">
+          <div class="panel-title-wrapper">
+            <span class="panel-icon">💬</span>
+            <h2>Atendimento ao Vivo da Nina</h2>
+          </div>
+          <span class="badge-live">Tempo Real</span>
+        </div>
+        <div class="feed-container" id="feed-container">
+          <div class="empty-feed">Carregando interações da Nina...</div>
+        </div>
+      </section>
+
+      <!-- Painel Direito: Simulador Operacional e Leads -->
+      <section class="panel control-panel">
+        <div class="panel-header">
+          <div class="panel-title-wrapper">
+            <span class="panel-icon">🧪</span>
+            <h2>Simulador de Leads & Jornada</h2>
+          </div>
+        </div>
+
+        <div class="tabs">
+          <button class="tab-btn active" data-tab="tab-novo-lead">Agendar Reunião</button>
+          <button class="tab-btn" data-tab="tab-abandono">Simular Abandono</button>
+          <button class="tab-btn" data-tab="tab-resposta-lead">Resposta WhatsApp</button>
+        </div>
+
+        <!-- Tab 1: Simular Agendamento Completo -->
+        <div class="tab-content active" id="tab-novo-lead">
+          <form id="form-novo-lead" class="sim-form">
+            <div class="form-group">
+              <label for="lead-nome">Nome do Lead</label>
+              <input type="text" id="lead-nome" required placeholder="Ex: Felipe Mendes" value="Felipe Mendes">
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="lead-tel">Telefone (WhatsApp)</label>
+                <input type="text" id="lead-tel" required placeholder="11988887777" value="11987654321">
+              </div>
+              <div class="form-group">
+                <label for="lead-setor">Segmento / Setor</label>
+                <select id="lead-setor">
+                  <option value="imobiliario">Imobiliário</option>
+                  <option value="saude">Saúde & Clínicas</option>
+                  <option value="b2b_saas">B2B SaaS / Tecnologia</option>
+                  <option value="varejo">Varejo & E-commerce</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="lead-data">Data/Hora da Reunião</label>
+              <input type="datetime-local" id="lead-data" required>
+            </div>
+            <button type="submit" class="btn btn-primary">
+              🚀 Simular Agendamento (< 2min Confirmação)
+            </button>
+          </form>
+        </div>
+
+        <!-- Tab 2: Simular Abandono -->
+        <div class="tab-content" id="tab-abandono">
+          <form id="form-abandono" class="sim-form">
+            <p class="form-helper">Simula um lead que digitou nome e telefone no Typeform, mas fechou a aba antes de escolher a data da call.</p>
+            <div class="form-group">
+              <label for="abandono-nome">Nome</label>
+              <input type="text" id="abandono-nome" required value="Larissa Fernandes">
+            </div>
+            <div class="form-group">
+              <label for="abandono-tel">WhatsApp</label>
+              <input type="text" id="abandono-tel" required value="11977778899">
+            </div>
+            <button type="submit" class="btn btn-warning">
+              ⚠️ Simular Abandono (Regra de 15 min)
+            </button>
+          </form>
+        </div>
+
+        <!-- Tab 3: Simular Resposta do Lead -->
+        <div class="tab-content" id="tab-resposta-lead">
+          <form id="form-resposta-lead" class="sim-form">
+            <p class="form-helper">Simule uma mensagem que o lead enviou no WhatsApp para ver a Nina processando e atualizando o status no CRM.</p>
+            <div class="form-group">
+              <label for="resp-tel">Telefone do Lead</label>
+              <input type="text" id="resp-tel" required placeholder="Ex: 11987654321" value="11987654321">
+            </div>
+            <div class="form-group">
+              <label for="resp-msg">Mensagem Enviada pelo Lead</label>
+              <textarea id="resp-msg" rows="3" required placeholder="Ex: Oi Nina, sim! Tá confirmado, estarei lá com certeza.">Oi Nina, com certeza vou estar na call!</textarea>
+            </div>
+            <div class="quick-replies">
+              <span class="quick-chip" data-text="Confirmado! Estarei na sala no horário.">"Confirmado!"</span>
+              <span class="quick-chip" data-text="Preciso cancelar, tive um imprevisto grave.">"Preciso cancelar"</span>
+              <span class="quick-chip" data-text="Vocês integram com o sistema X?">"Pergunta técnica"</span>
+            </div>
+            <button type="submit" class="btn btn-accent">
+              💬 Enviar Mensagem como Lead
+            </button>
+          </form>
+        </div>
+
+        <!-- Feedback de Ação -->
+        <div id="sim-feedback" class="feedback-box hidden"></div>
+      </section>
+    </main>
+
+    <!-- Rodapé -->
+    <footer class="main-footer">
+      <p>SDR IA Nina • Arquitetura Baseada no Case Real Viver de IA • Meta Cloud API + Claude Haiku + Supabase + ElevenLabs</p>
+    </footer>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
