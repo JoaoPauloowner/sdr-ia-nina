@@ -1,198 +1,235 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" class="dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Nina SDR IA — Painel Operacional em Tempo Real</title>
-  <meta name="description" content="Dashboard operacional do agente autônomo Nina para monitoramento de comparecimento em reuniões (Show Rate) e prevenção de no-show.">
+  <title>Nina SDR IA — Autonomous Pre-Sales Platform</title>
+  <meta name="description" content="Plataforma autônoma de pré-vendas e prevenção de no-show desenvolvida sobre os princípios de design da Vercel (Geist System).">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+  <!-- Vercel Hero Mesh Background -->
+  <div class="vercel-mesh-gradient"></div>
+
   <div class="app-container">
-    <!-- Header Principal -->
-    <header class="main-header">
-      <div class="brand">
-        <div class="logo-icon">🤖</div>
-        <div>
-          <h1>Nina SDR IA</h1>
-          <p class="subtitle">Agente de Pré-Vendas Autônomo & Prevenção de No-Show</p>
-        </div>
+    <!-- Vercel Top Navigation -->
+    <header class="vercel-nav">
+      <div class="nav-left">
+        <a href="#" class="brand-link">
+          <svg class="vercel-triangle" width="22" height="19" viewBox="0 0 76 65" fill="currentColor">
+            <path d="M37.5274 0L75.0548 65H0L37.5274 0Z"/>
+          </svg>
+          <span class="brand-slash">/</span>
+          <span class="brand-name">nina-sdr-ia</span>
+          <span class="badge-environment">production</span>
+        </a>
       </div>
-      <div class="header-actions">
+
+      <div class="nav-center">
+        <span class="mono-eyebrow">SYSTEM SPEC: 6 LEVERS • DETERMINISTIC ENGINE</span>
+      </div>
+
+      <div class="nav-right">
         <div class="status-indicator">
-          <span class="pulse-dot"></span>
-          <span class="status-text">Motor Determinístico Ativo</span>
+          <span class="status-dot"></span>
+          <span class="status-label">Operational</span>
         </div>
-        <button id="btn-trigger-tick" class="btn btn-secondary">
-          <span class="btn-icon">⚡</span> Rodar Scheduler (Tick)
+        <button id="btn-trigger-tick" class="btn btn-secondary btn-sm">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+          </svg>
+          <span>Run Scheduler</span>
         </button>
       </div>
     </header>
 
-    <!-- Grade de Métricas (KPIs) -->
+    <!-- Subheader Hero Banner -->
+    <section class="hero-band">
+      <div class="hero-content">
+        <div class="hero-eyebrow">AUTONOMOUS PRE-SALES & SHOW RATE PLATFORM</div>
+        <h1 class="hero-title">Zero no-show with deterministic timing & contextual AI.</h1>
+        <p class="hero-subtitle">Substitui o time de pré-vendas humano garantindo presença em reuniões através de WhatsApp oficial da Meta, Google Calendar, e-mail, SMS e voz sintetizada.</p>
+      </div>
+    </section>
+
+    <!-- Vercel KPI Metrics Grid -->
     <section class="kpi-grid">
-      <div class="kpi-card highlight">
+      <!-- Card 1: Show Rate -->
+      <div class="kpi-card highlight-card">
         <div class="kpi-header">
-          <span class="kpi-title">Taxa de Comparecimento (Show Rate)</span>
-          <span class="kpi-badge">Meta: 50%</span>
+          <span class="kpi-label">SHOW RATE</span>
+          <span class="kpi-pill success-pill">Target: 50%</span>
         </div>
         <div class="kpi-value" id="kpi-show-rate">--%</div>
         <div class="kpi-footer">
-          <span class="trend positive">▲ Case: 21% → 40%+</span>
-          <span class="kpi-sub">Redução de No-Show</span>
+          <span class="trend-indicator positive">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 15l-6-6-6 6"/></svg>
+            Case: 21% → 40%+
+          </span>
+          <span class="kpi-muted">Show rate em tempo real</span>
         </div>
       </div>
 
+      <!-- Card 2: Agendamentos -->
       <div class="kpi-card">
         <div class="kpi-header">
-          <span class="kpi-title">Total de Agendamentos</span>
-          <span class="kpi-icon">📅</span>
+          <span class="kpi-label">AGENDAMENTOS</span>
+          <span class="kpi-meta-tag">CRM</span>
         </div>
         <div class="kpi-value" id="kpi-agendamentos">0</div>
         <div class="kpi-footer">
-          <span id="kpi-confirmados" class="tag tag-success">0 Confirmados</span>
-          <span id="kpi-cancelados" class="tag tag-danger">0 Cancelados</span>
+          <span id="kpi-confirmados" class="status-pill status-confirmed">0 Confirmed</span>
+          <span id="kpi-cancelados" class="status-pill status-cancelled">0 Cancelled</span>
         </div>
       </div>
 
+      <!-- Card 3: Radar do Silêncio -->
       <div class="kpi-card">
         <div class="kpi-header">
-          <span class="kpi-title">Radar do Silêncio</span>
-          <span class="kpi-icon">📡</span>
+          <span class="kpi-label">RADAR DO SILÊNCIO</span>
+          <span class="kpi-meta-tag">> 6h</span>
         </div>
         <div class="kpi-value" id="kpi-silencio">0</div>
         <div class="kpi-footer">
-          <span class="kpi-sub">Leads sem resposta > 6h na régua específica</span>
+          <span class="kpi-muted">Régua de reengajamento enxuta</span>
         </div>
       </div>
 
+      <!-- Card 4: Recuperação de Abandono -->
       <div class="kpi-card">
         <div class="kpi-header">
-          <span class="kpi-title">Recuperação de Abandono</span>
-          <span class="kpi-icon">🎯</span>
+          <span class="kpi-label">ABANDONO RECUPERADO</span>
+          <span class="kpi-meta-tag">&lt; 15m</span>
         </div>
         <div class="kpi-value" id="kpi-abandonos">0</div>
         <div class="kpi-footer">
-          <span class="kpi-sub">Capturas salvas em até 15 minutos</span>
+          <span class="kpi-muted">Reativação via WhatsApp</span>
         </div>
       </div>
     </section>
 
-    <!-- Conteúdo Principal Dividido -->
-    <main class="main-content">
-      <!-- Painel Esquerdo: Feed de Conversas da Nina -->
-      <section class="panel feed-panel">
+    <!-- Main Workspace Layout -->
+    <main class="workspace-grid">
+      <!-- Coluna da Esquerda: Feed de Conversas ao Vivo -->
+      <section class="workspace-panel">
         <div class="panel-header">
-          <div class="panel-title-wrapper">
-            <span class="panel-icon">💬</span>
-            <h2>Atendimento ao Vivo da Nina</h2>
+          <div class="panel-title">
+            <span class="panel-dot"></span>
+            <h2>Runtime Activity Feed</h2>
           </div>
-          <span class="badge-live">Tempo Real</span>
+          <span class="mono-badge">STREAMING</span>
         </div>
         <div class="feed-container" id="feed-container">
           <div class="empty-feed">Carregando interações da Nina...</div>
         </div>
       </section>
 
-      <!-- Painel Direito: Simulador Operacional e Leads -->
-      <section class="panel control-panel">
+      <!-- Coluna da Direita: Simulador e Controles -->
+      <section class="workspace-panel">
         <div class="panel-header">
-          <div class="panel-title-wrapper">
-            <span class="panel-icon">🧪</span>
-            <h2>Simulador de Leads & Jornada</h2>
+          <div class="panel-title">
+            <h2>Simulator & Testing</h2>
+          </div>
+          <div class="tab-pills">
+            <button class="tab-pill active" data-tab="tab-novo-lead">Agendar</button>
+            <button class="tab-pill" data-tab="tab-abandono">Abandono</button>
+            <button class="tab-pill" data-tab="tab-resposta-lead">Resposta Lead</button>
           </div>
         </div>
 
-        <div class="tabs">
-          <button class="tab-btn active" data-tab="tab-novo-lead">Agendar Reunião</button>
-          <button class="tab-btn" data-tab="tab-abandono">Simular Abandono</button>
-          <button class="tab-btn" data-tab="tab-resposta-lead">Resposta WhatsApp</button>
-        </div>
-
-        <!-- Tab 1: Simular Agendamento Completo -->
-        <div class="tab-content active" id="tab-novo-lead">
-          <form id="form-novo-lead" class="sim-form">
-            <div class="form-group">
-              <label for="lead-nome">Nome do Lead</label>
-              <input type="text" id="lead-nome" required placeholder="Ex: Felipe Mendes" value="Felipe Mendes">
-            </div>
-            <div class="form-row">
+        <div class="tab-contents">
+          <!-- Tab 1: Agendar Reunião -->
+          <div class="tab-pane active" id="tab-novo-lead">
+            <form id="form-novo-lead" class="vercel-form">
               <div class="form-group">
-                <label for="lead-tel">Telefone (WhatsApp)</label>
-                <input type="text" id="lead-tel" required placeholder="11988887777" value="11987654321">
+                <label for="lead-nome">Nome Completo</label>
+                <input type="text" id="lead-nome" required placeholder="Ex: Lucas Guimarães" value="Lucas Guimarães" class="vercel-input">
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="lead-tel">Telefone WhatsApp</label>
+                  <input type="text" id="lead-tel" required placeholder="11987654321" value="11987654321" class="vercel-input">
+                </div>
+                <div class="form-group">
+                  <label for="lead-setor">Segmento (Case RAG)</label>
+                  <select id="lead-setor" class="vercel-select">
+                    <option value="b2b_saas">B2B SaaS / Tecnologia</option>
+                    <option value="imobiliario">Imobiliário</option>
+                    <option value="saude">Saúde & Clínicas</option>
+                    <option value="varejo">Varejo & E-commerce</option>
+                  </select>
+                </div>
               </div>
               <div class="form-group">
-                <label for="lead-setor">Segmento / Setor</label>
-                <select id="lead-setor">
-                  <option value="imobiliario">Imobiliário</option>
-                  <option value="saude">Saúde & Clínicas</option>
-                  <option value="b2b_saas">B2B SaaS / Tecnologia</option>
-                  <option value="varejo">Varejo & E-commerce</option>
-                </select>
+                <label for="lead-data">Data e Hora da Demonstração</label>
+                <input type="datetime-local" id="lead-data" required class="vercel-input">
               </div>
-            </div>
-            <div class="form-group">
-              <label for="lead-data">Data/Hora da Reunião</label>
-              <input type="datetime-local" id="lead-data" required>
-            </div>
-            <button type="submit" class="btn btn-primary">
-              🚀 Simular Agendamento (< 2min Confirmação)
-            </button>
-          </form>
+              <button type="submit" class="btn btn-primary btn-block">
+                <span>Agendar e Disparar Confirmação (&lt; 2min)</span>
+              </button>
+            </form>
+          </div>
+
+          <!-- Tab 2: Abandono de Formulário -->
+          <div class="tab-pane" id="tab-abandono">
+            <form id="form-abandono" class="vercel-form">
+              <p class="form-tip">Simula o lead que preencheu contato no Typeform mas abandonou a tela antes da seleção do horário.</p>
+              <div class="form-group">
+                <label for="abandono-nome">Nome</label>
+                <input type="text" id="abandono-nome" required value="Fernanda Souza" class="vercel-input">
+              </div>
+              <div class="form-group">
+                <label for="abandono-tel">WhatsApp</label>
+                <input type="text" id="abandono-tel" required value="11977770000" class="vercel-input">
+              </div>
+              <button type="submit" class="btn btn-warning btn-block">
+                <span>Simular Abandono (Regra 15 min)</span>
+              </button>
+            </form>
+          </div>
+
+          <!-- Tab 3: Resposta WhatsApp do Lead -->
+          <div class="tab-pane" id="tab-resposta-lead">
+            <form id="form-resposta-lead" class="vercel-form">
+              <p class="form-tip">Simule o envio de uma mensagem de volta no WhatsApp para testar a resposta do modelo Claude Haiku e a atualização no CRM.</p>
+              <div class="form-group">
+                <label for="resp-tel">Telefone do Lead</label>
+                <input type="text" id="resp-tel" required placeholder="11987654321" value="11987654321" class="vercel-input">
+              </div>
+              <div class="form-group">
+                <label for="resp-msg">Mensagem do Lead</label>
+                <textarea id="resp-msg" rows="3" required class="vercel-textarea">Oi Nina, com certeza vou comparecer!</textarea>
+              </div>
+              <div class="quick-chips">
+                <span class="chip" data-text="Confirmado! Estarei na sala no horário certinho.">"Confirmado!"</span>
+                <span class="chip" data-text="Preciso cancelar, tive um imprevisto hoje.">"Cancelar"</span>
+                <span class="chip" data-text="Vocês integram com o ERP Totvs?">"Dúvida técnica"</span>
+              </div>
+              <button type="submit" class="btn btn-primary btn-block">
+                <span>Enviar Resposta como Lead</span>
+              </button>
+            </form>
+          </div>
         </div>
 
-        <!-- Tab 2: Simular Abandono -->
-        <div class="tab-content" id="tab-abandono">
-          <form id="form-abandono" class="sim-form">
-            <p class="form-helper">Simula um lead que digitou nome e telefone no Typeform, mas fechou a aba antes de escolher a data da call.</p>
-            <div class="form-group">
-              <label for="abandono-nome">Nome</label>
-              <input type="text" id="abandono-nome" required value="Larissa Fernandes">
-            </div>
-            <div class="form-group">
-              <label for="abandono-tel">WhatsApp</label>
-              <input type="text" id="abandono-tel" required value="11977778899">
-            </div>
-            <button type="submit" class="btn btn-warning">
-              ⚠️ Simular Abandono (Regra de 15 min)
-            </button>
-          </form>
-        </div>
-
-        <!-- Tab 3: Simular Resposta do Lead -->
-        <div class="tab-content" id="tab-resposta-lead">
-          <form id="form-resposta-lead" class="sim-form">
-            <p class="form-helper">Simule uma mensagem que o lead enviou no WhatsApp para ver a Nina processando e atualizando o status no CRM.</p>
-            <div class="form-group">
-              <label for="resp-tel">Telefone do Lead</label>
-              <input type="text" id="resp-tel" required placeholder="Ex: 11987654321" value="11987654321">
-            </div>
-            <div class="form-group">
-              <label for="resp-msg">Mensagem Enviada pelo Lead</label>
-              <textarea id="resp-msg" rows="3" required placeholder="Ex: Oi Nina, sim! Tá confirmado, estarei lá com certeza.">Oi Nina, com certeza vou estar na call!</textarea>
-            </div>
-            <div class="quick-replies">
-              <span class="quick-chip" data-text="Confirmado! Estarei na sala no horário.">"Confirmado!"</span>
-              <span class="quick-chip" data-text="Preciso cancelar, tive um imprevisto grave.">"Preciso cancelar"</span>
-              <span class="quick-chip" data-text="Vocês integram com o sistema X?">"Pergunta técnica"</span>
-            </div>
-            <button type="submit" class="btn btn-accent">
-              💬 Enviar Mensagem como Lead
-            </button>
-          </form>
-        </div>
-
-        <!-- Feedback de Ação -->
-        <div id="sim-feedback" class="feedback-box hidden"></div>
+        <div id="sim-feedback" class="feedback-toast hidden"></div>
       </section>
     </main>
 
-    <!-- Rodapé -->
-    <footer class="main-footer">
-      <p>SDR IA Nina • Arquitetura Baseada no Case Real Viver de IA • Meta Cloud API + Claude Haiku + Supabase + ElevenLabs</p>
+    <!-- Vercel Clean Footer -->
+    <footer class="vercel-footer">
+      <div class="footer-content">
+        <div class="footer-left">
+          <svg class="vercel-triangle-sm" width="14" height="12" viewBox="0 0 76 65" fill="currentColor"><path d="M37.5274 0L75.0548 65H0L37.5274 0Z"/></svg>
+          <span>Nina SDR IA • Design System inspired by Vercel Geist</span>
+        </div>
+        <div class="footer-right">
+          <span class="mono-text">Supabase + Claude Haiku + Meta Cloud API + ElevenLabs</span>
+        </div>
+      </div>
     </footer>
   </div>
 
