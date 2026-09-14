@@ -1,55 +1,102 @@
 /* ==========================================================================
-   WISE DESIGN SYSTEM — SDR IA XENA
-   Tokens and aesthetics based on Wise Brand Guidelines (design-system/DESIGN.md)
+   MIYAGI LABS DESIGN SYSTEM — XENA SDR IA
+   Based on Miyagi Labs visual identity (design-system/DESIGN.md)
+   Obsidian Dark / Vermilion Glow (#FF4D00) / Precision Typography
    ========================================================================== */
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800;900&display=swap');
 
 :root {
-  /* Wise Color Palette */
-  --wise-primary: #9fe870;
-  --wise-primary-hover: #8ce057;
-  --wise-primary-active: #7cd444;
-  --wise-primary-neutral: #c5edab;
-  --wise-primary-pale: #e2f6d5;
+  /* Miyagi Brand Core Colors */
+  --miyagi-orange: #FF4D00;
+  --miyagi-orange-hover: #FF621E;
+  --miyagi-orange-active: #E03E00;
+  --miyagi-orange-glow: rgba(255, 77, 0, 0.28);
+  --miyagi-orange-subtle: rgba(255, 77, 0, 0.08);
 
-  --wise-ink: #0e0f0c;
-  --wise-ink-deep: #163300;
-  --wise-body: #454745;
-  --wise-mute: #747674;
-  --wise-canvas: #ffffff;
-  --wise-canvas-soft: #f4f6f1;
-  --wise-canvas-subtle: #e8ebe4;
-  --wise-border: #d8ded3;
-  --wise-border-focus: #163300;
+  /* Deep Obsidian Backgrounds */
+  --bg-dark: #0A0A0C;
+  --surface-dark: #121217;
+  --surface-card: #16161E;
+  --surface-card-hover: #1C1C26;
+  --surface-input: #111116;
 
-  /* Semantic Alerts */
-  --wise-positive: #2ead4b;
-  --wise-positive-pale: #e3f8e9;
-  --wise-positive-deep: #054d28;
-  --wise-warning: #ffd11a;
-  --wise-warning-pale: #fef8db;
-  --wise-warning-deep: #8a4e00;
-  --wise-negative: #d03238;
-  --wise-negative-pale: #fde8e8;
-  --wise-negative-deep: #8a151b;
-  --wise-info: #0284c7;
-  --wise-info-pale: #e0f2fe;
+  /* Borders & Dividers */
+  --border-subtle: #22222E;
+  --border-active: #FF4D00;
+  --border-hover: #323242;
 
-  /* Spacing & Radii */
+  /* Typography & Text */
+  --text-white: #FFFFFF;
+  --text-primary: #F4F4F6;
+  --text-secondary: #9B9BA8;
+  --text-muted: #646473;
+  --font-display: 'Plus Jakarta Sans', 'Inter', -apple-system, sans-serif;
+  --font-body: 'Inter', -apple-system, sans-serif;
+
+  /* Semantic Colors */
+  --positive: #10B981;
+  --positive-glow: rgba(16, 185, 129, 0.15);
+  --warning: #F59E0B;
+  --warning-glow: rgba(245, 158, 11, 0.15);
+  --negative: #EF4444;
+  --negative-glow: rgba(239, 68, 68, 0.15);
+  --info: #3B82F6;
+  --info-glow: rgba(59, 130, 246, 0.15);
+
+  /* Radii */
   --radius-sm: 8px;
   --radius-md: 12px;
-  --radius-lg: 16px;
+  --radius-lg: 18px;
   --radius-xl: 24px;
   --radius-pill: 9999px;
 
-  /* Shadows */
-  --shadow-subtle: 0 1px 3px rgba(14, 15, 12, 0.04), 0 4px 12px rgba(14, 15, 12, 0.03);
-  --shadow-card: 0 4px 20px rgba(14, 15, 12, 0.06);
-  --shadow-elevated: 0 12px 36px rgba(14, 15, 12, 0.12);
+  /* Shadows & Glows */
+  --shadow-subtle: 0 4px 20px rgba(0, 0, 0, 0.4);
+  --shadow-card: 0 8px 30px rgba(0, 0, 0, 0.5);
+  --shadow-orange-glow: 0 0 24px rgba(255, 77, 0, 0.35);
+  --shadow-elevated: 0 20px 48px -10px rgba(0, 0, 0, 0.7);
 
-  /* Font */
-  --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  /* Fallback / Theme Mapping Aliases */
+  --wise-canvas-soft: rgba(0, 0, 0, 0.3);
+  --wise-canvas-subtle: #1C1C26;
+  --wise-border: var(--border-subtle);
+  --wise-body: var(--text-secondary);
+  --wise-mute: var(--text-muted);
+  --wise-ink: var(--text-white);
+  --wise-ink-deep: var(--miyagi-orange);
+  --wise-primary: var(--miyagi-orange);
+}
+
+.lever-card {
+  background: rgba(0, 0, 0, 0.25);
+  padding: 18px;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-subtle);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.lever-card:hover {
+  border-color: rgba(255, 77, 0, 0.4);
+  background: rgba(255, 77, 0, 0.04);
+  transform: translateY(-2px);
+}
+
+.lever-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 13px;
+  margin-bottom: 6px;
+  color: var(--text-white);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.lever-desc {
+  font-size: 12px;
+  color: var(--text-secondary);
+  line-height: 1.45;
 }
 
 * {
@@ -59,16 +106,20 @@
 }
 
 body {
-  font-family: var(--font-family);
-  background-color: var(--wise-canvas-soft);
-  color: var(--wise-ink);
+  font-family: var(--font-body);
+  background-color: var(--bg-dark);
+  color: var(--text-primary);
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   min-height: 100vh;
+  background-image: 
+    radial-gradient(circle at 15% 10%, rgba(255, 77, 0, 0.05) 0%, transparent 40%),
+    radial-gradient(circle at 85% 85%, rgba(255, 77, 0, 0.03) 0%, transparent 50%);
+  background-attachment: fixed;
 }
 
 /* ==========================================================================
-   LAYOUT & NAVBAR
+   NAVBAR & HEADER
    ========================================================================== */
 
 .app-container {
@@ -78,18 +129,19 @@ body {
 }
 
 .wise-navbar {
-  background-color: var(--wise-canvas);
-  border-bottom: 1px solid var(--wise-border);
+  background: rgba(10, 10, 12, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border-subtle);
   position: sticky;
   top: 0;
   z-index: 100;
-  box-shadow: var(--shadow-subtle);
 }
 
 .nav-inner {
   max-width: 1400px;
   margin: 0 auto;
-  padding: 12px 24px;
+  padding: 14px 24px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -99,49 +151,55 @@ body {
 .brand-wrapper {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 14px;
   text-decoration: none;
   color: inherit;
 }
 
 .brand-badge {
-  background-color: var(--wise-ink-deep);
-  color: var(--wise-primary);
-  font-weight: 900;
-  font-size: 16px;
-  padding: 6px 14px;
+  background: linear-gradient(135deg, #FF5500 0%, #E03E00 100%);
+  color: var(--text-white);
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 14px;
+  padding: 6px 16px;
   border-radius: var(--radius-pill);
-  letter-spacing: 0.5px;
+  letter-spacing: 0.8px;
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
+  box-shadow: var(--shadow-orange-glow);
 }
 
 .brand-meta h1 {
-  font-size: 17px;
+  font-family: var(--font-display);
+  font-size: 18px;
   font-weight: 800;
-  color: var(--wise-ink);
+  color: var(--text-white);
   line-height: 1.2;
+  letter-spacing: -0.3px;
 }
 
 .brand-meta p {
-  font-size: 12px;
-  color: var(--wise-mute);
+  font-size: 11px;
+  color: var(--text-muted);
   font-weight: 500;
+  letter-spacing: 0.2px;
 }
 
 .nav-actions {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 14px;
 }
 
 .server-status-pill {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  background-color: var(--wise-primary-pale);
-  color: var(--wise-ink-deep);
+  gap: 8px;
+  background-color: var(--surface-dark);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
   font-size: 12px;
   font-weight: 600;
   padding: 6px 14px;
@@ -152,46 +210,48 @@ body {
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background-color: var(--wise-positive);
-  box-shadow: 0 0 0 2px var(--wise-primary);
-  animation: pulse 2s infinite;
+  background-color: var(--positive);
+  box-shadow: 0 0 10px var(--positive);
+  animation: pulseDot 2.2s infinite;
 }
 
-@keyframes pulse {
-  0% { transform: scale(0.95); opacity: 0.8; }
-  50% { transform: scale(1.15); opacity: 1; }
-  100% { transform: scale(0.95); opacity: 0.8; }
+@keyframes pulseDot {
+  0% { transform: scale(0.9); opacity: 0.7; }
+  50% { transform: scale(1.2); opacity: 1; }
+  100% { transform: scale(0.9); opacity: 0.7; }
 }
 
 /* ==========================================================================
-   NAVIGATION TABS
+   TABS BAR (SEGMENTED PILLS)
    ========================================================================== */
 
 .tabs-bar {
-  background-color: var(--wise-canvas);
-  border-bottom: 1px solid var(--wise-border);
+  background: rgba(18, 18, 23, 0.7);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border-subtle);
   overflow-x: auto;
 }
 
 .tabs-inner {
   max-width: 1400px;
   margin: 0 auto;
-  padding: 0 24px;
+  padding: 6px 24px;
   display: flex;
   gap: 8px;
 }
 
 .tab-btn {
-  background: none;
-  border: none;
-  padding: 14px 18px;
-  font-family: inherit;
-  font-size: 14px;
+  background: transparent;
+  border: 1px solid transparent;
+  padding: 10px 18px;
+  font-family: var(--font-display);
+  font-size: 13px;
   font-weight: 600;
-  color: var(--wise-body);
+  color: var(--text-secondary);
+  border-radius: var(--radius-pill);
   cursor: pointer;
   position: relative;
-  transition: all 0.2s ease;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
   white-space: nowrap;
   display: inline-flex;
   align-items: center;
@@ -199,28 +259,21 @@ body {
 }
 
 .tab-btn:hover {
-  color: var(--wise-ink);
+  color: var(--text-white);
+  background-color: rgba(255, 255, 255, 0.04);
 }
 
 .tab-btn.active {
-  color: var(--wise-ink-deep);
+  color: var(--text-white);
+  background: linear-gradient(135deg, #FF5500 0%, #D83A00 100%);
+  border-color: rgba(255, 77, 0, 0.5);
+  box-shadow: 0 2px 14px rgba(255, 77, 0, 0.35);
   font-weight: 700;
 }
 
-.tab-btn.active::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 3px;
-  background-color: var(--wise-ink-deep);
-  border-radius: 3px 3px 0 0;
-}
-
 .tab-badge {
-  background-color: var(--wise-canvas-soft);
-  color: var(--wise-ink);
+  background-color: rgba(255, 255, 255, 0.1);
+  color: var(--text-white);
   font-size: 11px;
   font-weight: 700;
   padding: 2px 7px;
@@ -228,8 +281,8 @@ body {
 }
 
 .tab-btn.active .tab-badge {
-  background-color: var(--wise-primary);
-  color: var(--wise-ink-deep);
+  background-color: rgba(0, 0, 0, 0.25);
+  color: var(--text-white);
 }
 
 /* ==========================================================================
@@ -246,19 +299,18 @@ body {
 
 .view-section {
   display: none;
-  animation: fadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  animation: viewFadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .view-section.active {
   display: block;
 }
 
-@keyframes fadeIn {
+@keyframes viewFadeIn {
   from { opacity: 0; transform: translateY(6px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* Header within View */
 .view-header {
   display: flex;
   align-items: center;
@@ -269,20 +321,21 @@ body {
 }
 
 .view-header h2 {
+  font-family: var(--font-display);
   font-size: 28px;
-  font-weight: 900;
-  color: var(--wise-ink);
-  letter-spacing: -0.5px;
+  font-weight: 800;
+  color: var(--text-white);
+  letter-spacing: -0.6px;
 }
 
 .view-header p {
-  font-size: 14px;
-  color: var(--wise-mute);
-  margin-top: 2px;
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin-top: 3px;
 }
 
 /* ==========================================================================
-   WISE BUTTONS & CONTROLS
+   BUTTONS (PILLS & ACTIONS)
    ========================================================================== */
 
 .btn {
@@ -290,10 +343,10 @@ body {
   align-items: center;
   justify-content: center;
   gap: 8px;
-  font-family: inherit;
-  font-size: 14px;
+  font-family: var(--font-display);
+  font-size: 13px;
   font-weight: 700;
-  padding: 10px 20px;
+  padding: 10px 22px;
   border-radius: var(--radius-pill);
   cursor: pointer;
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
@@ -302,76 +355,80 @@ body {
 }
 
 .btn-primary {
-  background-color: var(--wise-primary);
-  color: var(--wise-ink-deep);
+  background: linear-gradient(135deg, #FF5500 0%, #E03E00 100%);
+  color: var(--text-white);
+  box-shadow: 0 4px 18px rgba(255, 77, 0, 0.38);
 }
 
 .btn-primary:hover {
-  background-color: var(--wise-primary-hover);
+  background: linear-gradient(135deg, #FF661A 0%, #E84600 100%);
   transform: translateY(-1px);
+  box-shadow: 0 6px 24px rgba(255, 77, 0, 0.5);
 }
 
 .btn-dark {
-  background-color: var(--wise-ink-deep);
-  color: var(--wise-primary);
+  background-color: var(--surface-card);
+  color: var(--text-white);
+  border: 1px solid var(--border-subtle);
 }
 
 .btn-dark:hover {
-  background-color: #0e0f0c;
+  background-color: var(--surface-card-hover);
+  border-color: var(--miyagi-orange);
   transform: translateY(-1px);
 }
 
 .btn-secondary {
-  background-color: var(--wise-canvas);
-  color: var(--wise-ink);
-  border: 1px solid var(--wise-border);
+  background-color: rgba(255, 255, 255, 0.05);
+  color: var(--text-primary);
+  border: 1px solid var(--border-subtle);
 }
 
 .btn-secondary:hover {
-  background-color: var(--wise-canvas-soft);
-  border-color: var(--wise-body);
+  background-color: rgba(255, 255, 255, 0.08);
+  border-color: var(--border-hover);
+  color: var(--text-white);
 }
 
 .btn-danger {
-  background-color: var(--wise-negative-pale);
-  color: var(--wise-negative-deep);
+  background-color: rgba(239, 68, 68, 0.15);
+  color: #F87171;
+  border: 1px solid rgba(239, 68, 68, 0.3);
 }
 
 .btn-danger:hover {
-  background-color: var(--wise-negative);
-  color: white;
+  background-color: var(--negative);
+  color: var(--text-white);
 }
 
 .btn-sm {
-  padding: 6px 12px;
+  padding: 6px 14px;
   font-size: 12px;
 }
 
-.btn-icon {
-  width: 36px;
-  height: 36px;
-  padding: 0;
-  border-radius: 50%;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-}
-
 /* ==========================================================================
-   CARDS & GRIDS
+   CARDS & METRICS GRID
    ========================================================================== */
 
 .wise-card {
-  background-color: var(--wise-canvas);
-  border: 1px solid var(--wise-border);
+  background: var(--surface-card);
+  border: 1px solid var(--border-subtle);
   border-radius: var(--radius-xl);
   padding: 24px;
   box-shadow: var(--shadow-subtle);
-  transition: box-shadow 0.2s ease;
+  position: relative;
+  overflow: hidden;
 }
 
-.wise-card:hover {
-  box-shadow: var(--shadow-card);
+.wise-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 220px;
+  height: 220px;
+  background: radial-gradient(circle, rgba(255, 77, 0, 0.06) 0%, transparent 70%);
+  pointer-events: none;
 }
 
 .metrics-grid {
@@ -382,52 +439,66 @@ body {
 }
 
 .metric-card {
-  background-color: var(--wise-canvas);
-  border: 1px solid var(--wise-border);
+  background: var(--surface-card);
+  border: 1px solid var(--border-subtle);
   border-radius: var(--radius-xl);
   padding: 22px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   box-shadow: var(--shadow-subtle);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.metric-card:hover {
+  border-color: rgba(255, 77, 0, 0.3);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-card);
 }
 
 .metric-card.highlight {
-  background: linear-gradient(135deg, #eaf9e3 0%, #ffffff 100%);
-  border-color: var(--wise-primary-neutral);
+  border-color: rgba(255, 77, 0, 0.4);
+  background: radial-gradient(ellipse at top right, rgba(255, 77, 0, 0.12) 0%, var(--surface-card) 70%);
+  box-shadow: 0 4px 24px rgba(255, 77, 0, 0.15);
 }
 
 .metric-label {
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--wise-body);
+  font-family: var(--font-display);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
 .metric-value {
-  font-size: 40px;
-  font-weight: 900;
-  color: var(--wise-ink);
+  font-family: var(--font-display);
+  font-size: 44px;
+  font-weight: 800;
+  color: var(--text-white);
   letter-spacing: -1.5px;
-  margin: 8px 0;
+  margin: 10px 0;
   line-height: 1;
 }
 
 .metric-sub {
   font-size: 12px;
-  color: var(--wise-mute);
+  color: var(--text-muted);
   font-weight: 500;
 }
 
 /* ==========================================================================
-   TABLES & LISTS
+   TABLES & CRM PIPELINE
    ========================================================================== */
 
 .table-card {
-  background-color: var(--wise-canvas);
-  border: 1px solid var(--wise-border);
+  background: var(--surface-card);
+  border: 1px solid var(--border-subtle);
   border-radius: var(--radius-xl);
   overflow: hidden;
   box-shadow: var(--shadow-subtle);
@@ -435,39 +506,42 @@ body {
 
 .table-toolbar {
   padding: 16px 20px;
-  border-bottom: 1px solid var(--wise-border);
+  border-bottom: 1px solid var(--border-subtle);
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 16px;
   flex-wrap: wrap;
+  background: rgba(255, 255, 255, 0.02);
 }
 
 .search-input {
   font-family: inherit;
   padding: 9px 16px;
   font-size: 13px;
-  border: 1px solid var(--wise-border);
+  border: 1px solid var(--border-subtle);
   border-radius: var(--radius-pill);
   outline: none;
-  background-color: var(--wise-canvas-soft);
-  width: 260px;
+  background-color: var(--surface-input);
+  color: var(--text-white);
+  width: 280px;
   transition: all 0.2s;
 }
 
 .search-input:focus {
-  background-color: white;
-  border-color: var(--wise-ink);
+  border-color: var(--miyagi-orange);
+  box-shadow: 0 0 0 2px var(--miyagi-orange-subtle);
 }
 
 .filter-select {
   font-family: inherit;
   padding: 9px 14px;
   font-size: 13px;
-  border: 1px solid var(--wise-border);
+  border: 1px solid var(--border-subtle);
   border-radius: var(--radius-pill);
   outline: none;
-  background-color: var(--wise-canvas);
+  background-color: var(--surface-input);
+  color: var(--text-white);
   cursor: pointer;
 }
 
@@ -479,24 +553,25 @@ body {
 
 .wise-table th {
   padding: 14px 20px;
-  font-size: 12px;
+  font-family: var(--font-display);
+  font-size: 11px;
   font-weight: 700;
-  color: var(--wise-body);
+  color: var(--text-muted);
   text-transform: uppercase;
-  letter-spacing: 0.5px;
-  background-color: var(--wise-canvas-soft);
-  border-bottom: 1px solid var(--wise-border);
+  letter-spacing: 0.6px;
+  background-color: rgba(0, 0, 0, 0.2);
+  border-bottom: 1px solid var(--border-subtle);
 }
 
 .wise-table td {
   padding: 16px 20px;
   font-size: 13px;
-  border-bottom: 1px solid var(--wise-border);
-  color: var(--wise-ink);
+  border-bottom: 1px solid var(--border-subtle);
+  color: var(--text-primary);
 }
 
 .wise-table tr:hover {
-  background-color: #fafbf9;
+  background-color: rgba(255, 255, 255, 0.02);
 }
 
 .badge {
@@ -507,15 +582,16 @@ body {
   font-size: 11px;
   font-weight: 700;
   text-transform: capitalize;
+  letter-spacing: 0.3px;
 }
 
-.badge-agendado { background-color: var(--wise-info-pale); color: var(--wise-info); }
-.badge-confirmado, .badge-confirmado_pelo_lead { background-color: var(--wise-positive-pale); color: var(--wise-positive-deep); }
-.badge-cancelado, .badge-cancelado_pelo_lead { background-color: var(--wise-negative-pale); color: var(--wise-negative-deep); }
-.badge-radar_silencio { background-color: var(--wise-warning-pale); color: var(--wise-warning-deep); }
-.badge-abandonou_formulario { background-color: #f3e8ff; color: #6b21a8; }
-.badge-ativo { background-color: var(--wise-positive-pale); color: var(--wise-positive-deep); }
-.badge-inativo { background-color: var(--wise-canvas-subtle); color: var(--wise-body); }
+.badge-agendado { background-color: var(--info-glow); color: #60A5FA; border: 1px solid rgba(59, 130, 246, 0.3); }
+.badge-confirmado, .badge-confirmado_pelo_lead { background-color: var(--positive-glow); color: #34D399; border: 1px solid rgba(16, 185, 129, 0.3); }
+.badge-cancelado, .badge-cancelado_pelo_lead { background-color: var(--negative-glow); color: #F87171; border: 1px solid rgba(239, 68, 68, 0.3); }
+.badge-radar_silencio { background-color: var(--warning-glow); color: #FBBF24; border: 1px solid rgba(245, 158, 11, 0.3); }
+.badge-abandonou_formulario { background-color: rgba(168, 85, 247, 0.15); color: #C084FC; border: 1px solid rgba(168, 85, 247, 0.3); }
+.badge-ativo { background-color: var(--positive-glow); color: #34D399; }
+.badge-inativo { background-color: rgba(255, 255, 255, 0.05); color: var(--text-muted); }
 
 /* ==========================================================================
    INBOX AO VIVO / CHAT
@@ -530,8 +606,8 @@ body {
 }
 
 .inbox-sidebar {
-  background-color: var(--wise-canvas);
-  border: 1px solid var(--wise-border);
+  background: var(--surface-card);
+  border: 1px solid var(--border-subtle);
   border-radius: var(--radius-xl);
   display: flex;
   flex-direction: column;
@@ -540,7 +616,8 @@ body {
 
 .inbox-sidebar-header {
   padding: 16px;
-  border-bottom: 1px solid var(--wise-border);
+  border-bottom: 1px solid var(--border-subtle);
+  background: rgba(0, 0, 0, 0.15);
 }
 
 .conversations-list {
@@ -550,9 +627,9 @@ body {
 
 .conversation-item {
   padding: 14px 16px;
-  border-bottom: 1px solid var(--wise-border);
+  border-bottom: 1px solid var(--border-subtle);
   cursor: pointer;
-  transition: background-color 0.15s;
+  transition: all 0.15s ease;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -560,32 +637,33 @@ body {
 }
 
 .conversation-item:hover {
-  background-color: var(--wise-canvas-soft);
+  background-color: rgba(255, 255, 255, 0.03);
 }
 
 .conversation-item.active {
-  background-color: var(--wise-primary-pale);
-  border-left: 4px solid var(--wise-ink-deep);
+  background-color: rgba(255, 77, 0, 0.08);
+  border-left: 4px solid var(--miyagi-orange);
 }
 
 .conv-name {
+  font-family: var(--font-display);
   font-weight: 700;
   font-size: 13px;
-  color: var(--wise-ink);
+  color: var(--text-white);
 }
 
 .conv-sub {
   font-size: 11px;
-  color: var(--wise-mute);
+  color: var(--text-muted);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 200px;
+  max-width: 190px;
 }
 
 .chat-main {
-  background-color: var(--wise-canvas);
-  border: 1px solid var(--wise-border);
+  background: var(--surface-card);
+  border: 1px solid var(--border-subtle);
   border-radius: var(--radius-xl);
   display: flex;
   flex-direction: column;
@@ -594,11 +672,11 @@ body {
 
 .chat-header {
   padding: 16px 20px;
-  border-bottom: 1px solid var(--wise-border);
+  border-bottom: 1px solid var(--border-subtle);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: var(--wise-canvas-soft);
+  background-color: rgba(0, 0, 0, 0.2);
 }
 
 .chat-messages {
@@ -607,7 +685,7 @@ body {
   padding: 20px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 14px;
 }
 
 .chat-bubble {
@@ -615,31 +693,33 @@ body {
   padding: 12px 16px;
   border-radius: 18px;
   font-size: 13px;
-  line-height: 1.45;
+  line-height: 1.5;
   position: relative;
   word-break: break-word;
 }
 
 .chat-bubble.xena {
   align-self: flex-start;
-  background-color: var(--wise-canvas-soft);
-  color: var(--wise-ink);
+  background-color: #1A1A24;
+  color: var(--text-primary);
+  border: 1px solid var(--border-subtle);
   border-bottom-left-radius: 4px;
 }
 
 .chat-bubble.lead {
   align-self: flex-end;
-  background-color: var(--wise-ink-deep);
-  color: white;
+  background: linear-gradient(135deg, #FF5500 0%, #D83A00 100%);
+  color: var(--text-white);
   border-bottom-right-radius: 4px;
+  box-shadow: 0 4px 14px rgba(255, 77, 0, 0.25);
 }
 
 .chat-bubble.operator {
   align-self: flex-start;
-  background-color: var(--wise-primary);
-  color: var(--wise-ink-deep);
+  background-color: #201D28;
+  color: #FFA575;
+  border: 1px solid rgba(255, 77, 0, 0.4);
   border-bottom-left-radius: 4px;
-  font-weight: 500;
 }
 
 .bubble-author {
@@ -647,7 +727,8 @@ body {
   font-weight: 700;
   text-transform: uppercase;
   margin-bottom: 4px;
-  opacity: 0.7;
+  opacity: 0.75;
+  letter-spacing: 0.5px;
 }
 
 .bubble-time {
@@ -659,24 +740,26 @@ body {
 
 .chat-input-bar {
   padding: 14px 20px;
-  border-top: 1px solid var(--wise-border);
+  border-top: 1px solid var(--border-subtle);
   display: flex;
   gap: 10px;
-  background-color: white;
+  background-color: rgba(0, 0, 0, 0.25);
 }
 
 .chat-input-bar input {
   flex: 1;
   font-family: inherit;
-  padding: 10px 16px;
+  padding: 10px 18px;
   font-size: 13px;
-  border: 1px solid var(--wise-border);
+  border: 1px solid var(--border-subtle);
   border-radius: var(--radius-pill);
   outline: none;
+  background-color: var(--surface-input);
+  color: var(--text-white);
 }
 
 .chat-input-bar input:focus {
-  border-color: var(--wise-ink);
+  border-color: var(--miyagi-orange);
 }
 
 /* ==========================================================================
@@ -695,15 +778,17 @@ body {
 
 .form-label {
   display: block;
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 700;
-  color: var(--wise-ink);
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
   margin-bottom: 6px;
 }
 
 .form-hint {
-  font-size: 12px;
-  color: var(--wise-mute);
+  font-size: 11px;
+  color: var(--text-muted);
   margin-top: 4px;
 }
 
@@ -712,16 +797,17 @@ body {
   font-family: inherit;
   font-size: 13px;
   padding: 10px 14px;
-  border: 1px solid var(--wise-border);
+  border: 1px solid var(--border-subtle);
   border-radius: var(--radius-md);
-  background-color: white;
+  background-color: var(--surface-input);
+  color: var(--text-white);
   outline: none;
   transition: border-color 0.2s;
 }
 
 .form-input:focus, .form-textarea:focus, .form-select:focus {
-  border-color: var(--wise-ink-deep);
-  box-shadow: 0 0 0 2px var(--wise-primary-pale);
+  border-color: var(--miyagi-orange);
+  box-shadow: 0 0 0 2px var(--miyagi-orange-subtle);
 }
 
 .form-textarea {
@@ -736,26 +822,28 @@ body {
 }
 
 .timing-item {
-  background-color: var(--wise-canvas-soft);
+  background-color: rgba(0, 0, 0, 0.25);
   padding: 14px;
   border-radius: var(--radius-md);
-  border: 1px solid var(--wise-border);
+  border: 1px solid var(--border-subtle);
 }
 
 .timing-item label {
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 700;
   display: block;
   margin-bottom: 6px;
+  color: var(--text-secondary);
 }
 
 .timing-item input {
   width: 100%;
   padding: 8px 12px;
   font-size: 13px;
-  border: 1px solid var(--wise-border);
+  border: 1px solid var(--border-subtle);
   border-radius: var(--radius-sm);
-  background-color: white;
+  background-color: var(--surface-input);
+  color: var(--text-white);
 }
 
 /* ==========================================================================
@@ -768,8 +856,8 @@ body {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(14, 15, 12, 0.4);
-  backdrop-filter: blur(4px);
+  background-color: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(8px);
   z-index: 1000;
   display: flex;
   align-items: center;
@@ -785,7 +873,8 @@ body {
 }
 
 .modal-dialog {
-  background-color: white;
+  background: var(--surface-card);
+  border: 1px solid var(--border-subtle);
   width: 90%;
   max-width: 580px;
   max-height: 90vh;
@@ -809,20 +898,22 @@ body {
 }
 
 .modal-header h3 {
+  font-family: var(--font-display);
   font-size: 20px;
   font-weight: 800;
+  color: var(--text-white);
 }
 
 .close-btn {
   background: none;
   border: none;
-  font-size: 20px;
+  font-size: 22px;
   cursor: pointer;
-  color: var(--wise-mute);
+  color: var(--text-muted);
 }
 
 .close-btn:hover {
-  color: var(--wise-ink);
+  color: var(--text-white);
 }
 
 /* ==========================================================================
@@ -833,13 +924,14 @@ body {
   position: fixed;
   bottom: 24px;
   right: 24px;
-  background-color: var(--wise-ink-deep);
-  color: white;
+  background-color: var(--surface-card);
+  border: 1px solid var(--miyagi-orange);
+  color: var(--text-white);
   padding: 14px 22px;
   border-radius: var(--radius-pill);
   font-size: 13px;
   font-weight: 600;
-  box-shadow: var(--shadow-elevated);
+  box-shadow: var(--shadow-orange-glow);
   display: flex;
   align-items: center;
   gap: 10px;
@@ -854,14 +946,9 @@ body {
   opacity: 1;
 }
 
-.toast.success {
-  background-color: var(--wise-ink-deep);
-  border: 1px solid var(--wise-primary);
-  color: white;
-}
-
 .toast.error {
-  background-color: var(--wise-negative-deep);
+  border-color: var(--negative);
+  box-shadow: 0 0 24px rgba(239, 68, 68, 0.35);
 }
 
 /* ==========================================================================
