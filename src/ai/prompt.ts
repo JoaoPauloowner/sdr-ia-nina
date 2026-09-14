@@ -5,8 +5,8 @@ export interface PromptOptions {
   tempoSilencioHoras?: number;
 }
 
-export function getNinaSystemPrompt(options: PromptOptions = {}): string {
-  const nomeAgente = options.nomeAgente || 'Nina';
+export function getXenaSystemPrompt(options: PromptOptions = {}): string {
+  const nomeAgente = options.nomeAgente || 'Xena';
   const nomeEmpresa = options.nomeEmpresa || 'Nossa Empresa';
   const tempoAbandono = options.tempoAbandonoMinutos || 15;
   const tempoSilencio = options.tempoSilencioHoras || 6;
@@ -67,3 +67,5 @@ Ao se comunicar com o lead, utilize os seguintes dados quando disponíveis:
   educadamente se a resposta for não
 `;
 }
+
+export const getNinaSystemPrompt = getXenaSystemPrompt;

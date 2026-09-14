@@ -13,14 +13,18 @@ export interface DatabaseAdapter {
   leads: {
     insert(lead: Partial<Lead>): Promise<Lead>;
     update(id: string, updates: Partial<Lead>): Promise<Lead | null>;
+    delete(id: string): Promise<boolean>;
     getById(id: string): Promise<Lead | null>;
     getByPhone(phone: string): Promise<Lead | null>;
     listAll(): Promise<Lead[]>;
   };
   closers: {
     insert(closer: Partial<Closer>): Promise<Closer>;
+    update(id: string, updates: Partial<Closer>): Promise<Closer | null>;
+    delete(id: string): Promise<boolean>;
     getById(id: string): Promise<Closer | null>;
     getActive(): Promise<Closer[]>;
+    listAll(): Promise<Closer[]>;
   };
   agendamentos: {
     insert(agendamento: Partial<Agendamento>): Promise<Agendamento>;
@@ -31,6 +35,9 @@ export interface DatabaseAdapter {
   };
   cases: {
     insert(c: Partial<CaseSucesso>): Promise<CaseSucesso>;
+    update(id: string, updates: Partial<CaseSucesso>): Promise<CaseSucesso | null>;
+    delete(id: string): Promise<boolean>;
+    getById(id: string): Promise<CaseSucesso | null>;
     getBySegment(segment: string): Promise<CaseSucesso | null>;
     listAll(): Promise<CaseSucesso[]>;
   };
@@ -133,6 +140,11 @@ class InMemoryDatabaseAdapter implements DatabaseAdapter {
       };
       return this.leadsList[idx];
     },
+    delete: async (id: string): Promise<boolean> => {
+      const initialLength = this.leadsList.length;
+      this.leadsList = this.leadsList.filter(l => l.id !== id);
+      return this.leadsList.length < initialLength;
+    },
     getById: async (id: string): Promise<Lead | null> => {
       return this.leadsList.find(l => l.id === id) || null;
     },
@@ -159,11 +171,28 @@ class InMemoryDatabaseAdapter implements DatabaseAdapter {
       this.closersList.push(newCloser);
       return newCloser;
     },
+    update: async (id: string, updates: Partial<Closer>): Promise<Closer | null> => {
+      const idx = this.closersList.findIndex(c => c.id === id);
+      if (idx === -1) return null;
+      this.closersList[idx] = {
+        ...this.closersList[idx],
+        ...updates
+      };
+      return this.closersList[idx];
+    },
+    delete: async (id: string): Promise<boolean> => {
+      const initialLength = this.closersList.length;
+      this.closersList = this.closersList.filter(c => c.id !== id);
+      return this.closersList.length < initialLength;
+    },
     getById: async (id: string): Promise<Closer | null> => {
       return this.closersList.find(c => c.id === id) || null;
     },
     getActive: async (): Promise<Closer[]> => {
       return this.closersList.filter(c => c.ativo);
+    },
+    listAll: async (): Promise<Closer[]> => {
+      return [...this.closersList];
     }
   };
 
@@ -216,6 +245,23 @@ class InMemoryDatabaseAdapter implements DatabaseAdapter {
       };
       this.casesList.push(newCase);
       return newCase;
+    },
+    update: async (id: string, updates: Partial<CaseSucesso>): Promise<CaseSucesso | null> => {
+      const idx = this.casesList.findIndex(c => c.id === id);
+      if (idx === -1) return null;
+      this.casesList[idx] = {
+        ...this.casesList[idx],
+        ...updates
+      };
+      return this.casesList[idx];
+    },
+    delete: async (id: string): Promise<boolean> => {
+      const initialLength = this.casesList.length;
+      this.casesList = this.casesList.filter(c => c.id !== id);
+      return this.casesList.length < initialLength;
+    },
+    getById: async (id: string): Promise<CaseSucesso | null> => {
+      return this.casesList.find(c => c.id === id) || null;
     },
     getBySegment: async (segment: string): Promise<CaseSucesso | null> => {
       const target = segment.toLowerCase();

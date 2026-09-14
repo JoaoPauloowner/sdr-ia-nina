@@ -3,7 +3,7 @@ import { bookingService } from '../services/bookingService.js';
 import { knowledgeService } from '../services/knowledgeService.js';
 import { getDatabase } from '../database/supabase.js';
 
-export const ninaToolsDefinitions = [
+export const xenaToolsDefinitions = [
   {
     name: 'buscar_lead_crm',
     description: 'Busca os dados cadastrais do lead e seus agendamentos no CRM por ID, telefone ou email',
@@ -34,13 +34,13 @@ export const ninaToolsDefinitions = [
   },
   {
     name: 'buscar_case_por_segmento',
-    description: 'Busca na base de conhecimento um case de sucesso do mesmo setor/nicho do lead para personalização',
+    description: 'Busca na base de conhecimento (RAG) o case de sucesso mais relevante para o setor/segmento do lead',
     input_schema: {
       type: 'object',
       properties: {
         segmento: {
           type: 'string',
-          description: 'Nicho ou segmento do lead (ex: saúde, imobiliário, b2b_saas, varejo)'
+          description: 'Segmento ou nicho de atuação do lead (ex: saude, imobiliario, b2b_saas, e-commerce, consultoria)'
         }
       },
       required: ['segmento']
@@ -52,45 +52,46 @@ export const ninaToolsDefinitions = [
     input_schema: {
       type: 'object',
       properties: {
-        lead_id: {
-          type: 'string',
-          description: 'ID do lead'
+        lead_id: { type: 'string', description: 'ID do lead' },
+        status: { 
+          type: 'string', 
+          enum: ['confirmado', 'reagendado', 'cancelado', 'no_show', 'radar_silencio'],
+          description: 'Novo status do agendamento'
         },
-        status: {
-          type: 'string',
-          description: 'Novo status (confirmado, cancelado_pelo_lead, reagendamento_solicitado)'
-        }
+        motivo: { type: 'string', description: 'Motivo ou observação adicional' }
       },
       required: ['lead_id', 'status']
     }
   },
   {
     name: 'criar_evento_calendario',
-    description: 'Cria evento de reunião com link do Meet no Google Calendar do lead',
+    description: 'Gera link do Google Meet / Cal.com e cria o convite no calendário',
     input_schema: {
       type: 'object',
       properties: {
-        lead_id: { type: 'string' },
-        horario: { type: 'string' }
+        lead_id: { type: 'string', description: 'ID do lead' },
+        data_hora: { type: 'string', description: 'Data e hora no formato ISO 8601' },
+        email_lead: { type: 'string', description: 'E-mail do lead' },
+        closer_id: { type: 'string', description: 'ID do closer' }
       },
-      required: ['lead_id', 'horario']
+      required: ['lead_id', 'data_hora']
     }
   },
   {
     name: 'enviar_whatsapp',
-    description: 'Envia mensagem de texto via WhatsApp oficial da Meta',
+    description: 'Dispara mensagem de texto via WhatsApp Cloud API',
     input_schema: {
       type: 'object',
       properties: {
-        numero: { type: 'string' },
-        mensagem: { type: 'string' }
+        telefone: { type: 'string', description: 'Número do lead no formato DDI+DDD+Número' },
+        mensagem: { type: 'string', description: 'Texto da mensagem a ser enviada' }
       },
-      required: ['numero', 'mensagem']
+      required: ['telefone', 'mensagem']
     }
   },
   {
     name: 'gerar_audio',
-    description: 'Sintetiza mensagem em áudio natural da Nina via ElevenLabs',
+    description: 'Sintetiza mensagem em áudio natural da Xena via ElevenLabs',
     input_schema: {
       type: 'object',
       properties: {
@@ -100,6 +101,8 @@ export const ninaToolsDefinitions = [
     }
   }
 ];
+
+export const ninaToolsDefinitions = xenaToolsDefinitions;
 
 export async function executeTool(name: string, args: Record<string, any>): Promise<any> {
   const db = getDatabase();
@@ -145,7 +148,7 @@ export async function executeTool(name: string, args: Record<string, any>): Prom
         return {
           success: true,
           calendarEventId: `cal-${Date.now()}`,
-          linkMeet: 'https://meet.google.com/abc-nina-demo'
+          linkMeet: 'https://meet.google.com/xena-reuniao'
         };
       }
 
@@ -156,7 +159,7 @@ export async function executeTool(name: string, args: Record<string, any>): Prom
       case 'gerar_audio': {
         return {
           success: true,
-          audioUrl: `https://storage.empresa.com/audios/nina-${Date.now()}.ogg`
+          audioUrl: `https://storage.empresa.com/audios/xena-${Date.now()}.ogg`
         };
       }
 

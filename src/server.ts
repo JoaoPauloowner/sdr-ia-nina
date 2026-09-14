@@ -18,7 +18,9 @@ export function createServer(): express.Express {
 
   // Rotas da API
   app.use('/api/webhooks', webhookRouter);
+  app.use('/webhook', webhookRouter);
   app.use('/api/dashboard', dashboardRouter);
+  app.use('/api', dashboardRouter);
 
   // Servir arquivos estáticos do dashboard
   const publicDir = path.join(__dirname, 'public');
@@ -35,9 +37,9 @@ if (process.env.NODE_ENV !== 'test') {
   const app = createServer();
   const PORT = config.port;
   app.listen(PORT, () => {
-    console.log(`\n🤖 SDR IA Nina rodando na porta ${PORT}`);
+    console.log(`\n⚔️ SDR IA Xena rodando na porta ${PORT}`);
     console.log(`📊 Painel Operacional: http://localhost:${PORT}`);
-    console.log(`🔗 Webhook de Leads: http://localhost:${PORT}/api/webhooks/lead-form`);
-    console.log(`💬 Webhook WhatsApp: http://localhost:${PORT}/api/webhooks/meta-whatsapp\n`);
+    console.log(`🔗 Webhook Leads: http://localhost:${PORT}/webhook/lead-form`);
+    console.log(`💬 Webhook WhatsApp: http://localhost:${PORT}/webhook/meta-whatsapp\n`);
   });
 }

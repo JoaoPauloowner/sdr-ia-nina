@@ -1,237 +1,613 @@
 <!DOCTYPE html>
-<html lang="pt-BR" class="dark">
+<html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Nina SDR IA — Autonomous Pre-Sales Platform</title>
-  <meta name="description" content="Plataforma autônoma de pré-vendas e prevenção de no-show desenvolvida sobre os princípios de design da Vercel (Geist System).">
+  <title>Xena SDR IA — Autonomous Pre-Sales & Anti No-Show Platform</title>
+  <link rel="stylesheet" href="styles.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <!-- Vercel Hero Mesh Background -->
-  <div class="vercel-mesh-gradient"></div>
-
   <div class="app-container">
-    <!-- Vercel Top Navigation -->
-    <header class="vercel-nav">
-      <div class="nav-left">
-        <a href="#" class="brand-link">
-          <svg class="vercel-triangle" width="22" height="19" viewBox="0 0 76 65" fill="currentColor">
-            <path d="M37.5274 0L75.0548 65H0L37.5274 0Z"/>
-          </svg>
-          <span class="brand-slash">/</span>
-          <span class="brand-name">nina-sdr-ia</span>
-          <span class="badge-environment">production</span>
-        </a>
-      </div>
-
-      <div class="nav-center">
-        <span class="mono-eyebrow">SYSTEM SPEC: 6 LEVERS • DETERMINISTIC ENGINE</span>
-      </div>
-
-      <div class="nav-right">
-        <div class="status-indicator">
-          <span class="status-dot"></span>
-          <span class="status-label">Operational</span>
+    <!-- Wise Top Navigation Bar -->
+    <header class="wise-navbar">
+      <div class="nav-inner">
+        <div class="brand-wrapper">
+          <div class="brand-badge">
+            <span>⚔️ XENA</span>
+          </div>
+          <div class="brand-meta">
+            <h1>Xena SDR IA</h1>
+            <p>Autonomous Pre-Sales & Anti No-Show Engine</p>
+          </div>
         </div>
-        <button id="btn-trigger-tick" class="btn btn-secondary btn-sm">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
-          </svg>
-          <span>Run Scheduler</span>
-        </button>
+
+        <div class="nav-actions">
+          <div class="server-status-pill">
+            <span class="status-dot"></span>
+            <span>Online • Porta 3333</span>
+          </div>
+          <button id="btn-quick-sim" class="btn btn-primary btn-sm">
+            <span>⚡ Simular Ação</span>
+          </button>
+        </div>
       </div>
     </header>
 
-    <!-- Subheader Hero Banner -->
-    <section class="hero-band">
-      <div class="hero-content">
-        <div class="hero-eyebrow">AUTONOMOUS PRE-SALES & SHOW RATE PLATFORM</div>
-        <h1 class="hero-title">Zero no-show with deterministic timing & contextual AI.</h1>
-        <p class="hero-subtitle">Substitui o time de pré-vendas humano garantindo presença em reuniões através de WhatsApp oficial da Meta, Google Calendar, e-mail, SMS e voz sintetizada.</p>
+    <!-- Top Navigation Tabs -->
+    <nav class="tabs-bar">
+      <div class="tabs-inner">
+        <button class="tab-btn active" data-tab="tab-overview">
+          <span>📊 Visão Geral</span>
+        </button>
+        <button class="tab-btn" data-tab="tab-crm">
+          <span>👥 CRM & Leads</span>
+          <span class="tab-badge" id="badge-total-leads">0</span>
+        </button>
+        <button class="tab-btn" data-tab="tab-inbox">
+          <span>💬 Inbox ao Vivo</span>
+          <span class="tab-badge" id="badge-inbox-count">0</span>
+        </button>
+        <button class="tab-btn" data-tab="tab-closers">
+          <span>🎯 Equipe / Closers</span>
+          <span class="tab-badge" id="badge-closers-count">0</span>
+        </button>
+        <button class="tab-btn" data-tab="tab-cases">
+          <span>🧠 Base de Conhecimento (RAG)</span>
+        </button>
+        <button class="tab-btn" data-tab="tab-config">
+          <span>⚙️ Configurações do Produto</span>
+        </button>
+        <button class="tab-btn" data-tab="tab-simulator">
+          <span>⚡ Simulador de Testes</span>
+        </button>
       </div>
-    </section>
+    </nav>
 
-    <!-- Vercel KPI Metrics Grid -->
-    <section class="kpi-grid">
-      <!-- Card 1: Show Rate -->
-      <div class="kpi-card highlight-card">
-        <div class="kpi-header">
-          <span class="kpi-label">SHOW RATE</span>
-          <span class="kpi-pill success-pill">Target: 50%</span>
-        </div>
-        <div class="kpi-value" id="kpi-show-rate">--%</div>
-        <div class="kpi-footer">
-          <span class="trend-indicator positive">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 15l-6-6-6 6"/></svg>
-            Case: 21% → 40%+
-          </span>
-          <span class="kpi-muted">Show rate em tempo real</span>
-        </div>
-      </div>
-
-      <!-- Card 2: Agendamentos -->
-      <div class="kpi-card">
-        <div class="kpi-header">
-          <span class="kpi-label">AGENDAMENTOS</span>
-          <span class="kpi-meta-tag">CRM</span>
-        </div>
-        <div class="kpi-value" id="kpi-agendamentos">0</div>
-        <div class="kpi-footer">
-          <span id="kpi-confirmados" class="status-pill status-confirmed">0 Confirmed</span>
-          <span id="kpi-cancelados" class="status-pill status-cancelled">0 Cancelled</span>
-        </div>
-      </div>
-
-      <!-- Card 3: Radar do Silêncio -->
-      <div class="kpi-card">
-        <div class="kpi-header">
-          <span class="kpi-label">RADAR DO SILÊNCIO</span>
-          <span class="kpi-meta-tag">> 6h</span>
-        </div>
-        <div class="kpi-value" id="kpi-silencio">0</div>
-        <div class="kpi-footer">
-          <span class="kpi-muted">Régua de reengajamento enxuta</span>
-        </div>
-      </div>
-
-      <!-- Card 4: Recuperação de Abandono -->
-      <div class="kpi-card">
-        <div class="kpi-header">
-          <span class="kpi-label">ABANDONO RECUPERADO</span>
-          <span class="kpi-meta-tag">&lt; 15m</span>
-        </div>
-        <div class="kpi-value" id="kpi-abandonos">0</div>
-        <div class="kpi-footer">
-          <span class="kpi-muted">Reativação via WhatsApp</span>
-        </div>
-      </div>
-    </section>
-
-    <!-- Main Workspace Layout -->
-    <main class="workspace-grid">
-      <!-- Coluna da Esquerda: Feed de Conversas ao Vivo -->
-      <section class="workspace-panel">
-        <div class="panel-header">
-          <div class="panel-title">
-            <span class="panel-dot"></span>
-            <h2>Runtime Activity Feed</h2>
+    <!-- Main Workspace Area -->
+    <main class="main-content">
+      
+      <!-- ====================================================================
+           TAB 1: VISÃO GERAL
+           ==================================================================== -->
+      <section id="tab-overview" class="view-section active">
+        <div class="view-header">
+          <div>
+            <h2>Painel Operacional da Xena</h2>
+            <p>Monitoramento em tempo real do Show Rate, reuniões confirmadas e cerco anti no-show.</p>
           </div>
-          <span class="mono-badge">STREAMING</span>
+          <button class="btn btn-secondary btn-sm" id="btn-refresh-metrics">
+            <span>↻ Atualizar Métricas</span>
+          </button>
         </div>
-        <div class="feed-container" id="feed-container">
-          <div class="empty-feed">Carregando interações da Nina...</div>
+
+        <!-- Metrics Grid -->
+        <div class="metrics-grid">
+          <div class="metric-card highlight">
+            <div class="metric-label">
+              <span>TAXA DE SHOW RATE</span>
+              <span class="badge badge-confirmado">Meta: 50%+</span>
+            </div>
+            <div class="metric-value" id="kpi-showrate">45%</div>
+            <div class="metric-sub">Baseado em presenças confirmadas vs faltas</div>
+          </div>
+
+          <div class="metric-card">
+            <div class="metric-label">REUNIÕES CONFIRMADAS</div>
+            <div class="metric-value" id="kpi-confirmados">0</div>
+            <div class="metric-sub">Leads com presença validada via WhatsApp</div>
+          </div>
+
+          <div class="metric-card">
+            <div class="metric-label">RADAR DO SILÊNCIO</div>
+            <div class="metric-value" id="kpi-silencio">0</div>
+            <div class="metric-sub">Leads sem resposta em recuperação ativa</div>
+          </div>
+
+          <div class="metric-card">
+            <div class="metric-label">ABANDONOS SALVOS</div>
+            <div class="metric-value" id="kpi-abandonos">0</div>
+            <div class="metric-sub">Formulários incompletos reengajados</div>
+          </div>
+
+          <div class="metric-card">
+            <div class="metric-label">TAREFAS NA FILA</div>
+            <div class="metric-value" id="kpi-fila">0</div>
+            <div class="metric-sub">Disparos das 6 alavancas agendados</div>
+          </div>
+        </div>
+
+        <!-- Engine Status & Levers Card -->
+        <div class="wise-card" style="margin-bottom: 24px;">
+          <h3 style="font-size: 18px; font-weight: 800; margin-bottom: 16px;">
+            ⚔️ Motor Anti No-Show da Xena — As 6 Alavancas Ativas
+          </h3>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px;">
+            <div style="background: var(--wise-canvas-soft); padding: 16px; border-radius: var(--radius-lg); border: 1px solid var(--wise-border);">
+              <div style="font-weight: 700; font-size: 14px; margin-bottom: 4px;">Alavanca 1: Confirmação Imediata</div>
+              <div style="font-size: 12px; color: var(--wise-body);">Disparo multicanal (&lt; 2 min) no WhatsApp com link da sala e case relevante.</div>
+            </div>
+            <div style="background: var(--wise-canvas-soft); padding: 16px; border-radius: var(--radius-lg); border: 1px solid var(--wise-border);">
+              <div style="font-weight: 700; font-size: 14px; margin-bottom: 4px;">Alavanca 2: Lembrete Matinal D-1</div>
+              <div style="font-size: 12px; color: var(--wise-body);">Lembrete humanizado no dia anterior para blindar a agenda do lead.</div>
+            </div>
+            <div style="background: var(--wise-canvas-soft); padding: 16px; border-radius: var(--radius-lg); border: 1px solid var(--wise-border);">
+              <div style="font-weight: 700; font-size: 14px; margin-bottom: 4px;">Alavanca 3: Cerco Multicanal</div>
+              <div style="font-size: 12px; color: var(--wise-body);">Disparo coordenado 1h antes e cerco decisivo 5 minutos antes com link direto.</div>
+            </div>
+            <div style="background: var(--wise-canvas-soft); padding: 16px; border-radius: var(--radius-lg); border: 1px solid var(--wise-border);">
+              <div style="font-weight: 700; font-size: 14px; margin-bottom: 4px;">Alavanca 4: Radar do Silêncio</div>
+              <div style="font-size: 12px; color: var(--wise-body);">Pergunta de corte elegante após 6h de silêncio para liberar ou salvar vaga.</div>
+            </div>
+            <div style="background: var(--wise-canvas-soft); padding: 16px; border-radius: var(--radius-lg); border: 1px solid var(--wise-border);">
+              <div style="font-weight: 700; font-size: 14px; margin-bottom: 4px;">Alavanca 5: Recuperação de Abandono</div>
+              <div style="font-size: 12px; color: var(--wise-body);">Mensagem 15 minutos após preenchimento incompleto do formulário.</div>
+            </div>
+            <div style="background: var(--wise-canvas-soft); padding: 16px; border-radius: var(--radius-lg); border: 1px solid var(--wise-border);">
+              <div style="font-weight: 700; font-size: 14px; margin-bottom: 4px;">Alavanca 6: Reengajamento Pós-Falta</div>
+              <div style="font-size: 12px; color: var(--wise-body);">Fluxo amigável de remarcação 15 minutos após o no-show do lead.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recent Activity Feed -->
+        <div class="wise-card">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+            <h3 style="font-size: 18px; font-weight: 800;">Feed de Interações em Tempo Real</h3>
+            <button class="btn btn-secondary btn-sm" id="btn-view-inbox-all">Ver no Inbox →</button>
+          </div>
+          <div id="overview-feed-container" style="display: flex; flex-direction: column; gap: 10px; max-height: 320px; overflow-y: auto;">
+            <div style="text-align: center; padding: 20px; color: var(--wise-mute);">Carregando interações recentes...</div>
+          </div>
         </div>
       </section>
 
-      <!-- Coluna da Direita: Simulador e Controles -->
-      <section class="workspace-panel">
-        <div class="panel-header">
-          <div class="panel-title">
-            <h2>Simulator & Testing</h2>
+      <!-- ====================================================================
+           TAB 2: CRM & LEADS
+           ==================================================================== -->
+      <section id="tab-crm" class="view-section">
+        <div class="view-header">
+          <div>
+            <h2>CRM de Leads & Pipeline</h2>
+            <p>Gerencie todos os contatos, agendamentos, status e histórico completo de interações.</p>
           </div>
-          <div class="tab-pills">
-            <button class="tab-pill active" data-tab="tab-novo-lead">Agendar</button>
-            <button class="tab-pill" data-tab="tab-abandono">Abandono</button>
-            <button class="tab-pill" data-tab="tab-resposta-lead">Resposta Lead</button>
-          </div>
+          <button class="btn btn-primary" id="btn-crm-new-lead">
+            <span>+ Novo Agendamento</span>
+          </button>
         </div>
 
-        <div class="tab-contents">
-          <!-- Tab 1: Agendar Reunião -->
-          <div class="tab-pane active" id="tab-novo-lead">
-            <form id="form-novo-lead" class="vercel-form">
-              <div class="form-group">
-                <label for="lead-nome">Nome Completo</label>
-                <input type="text" id="lead-nome" required placeholder="Ex: Lucas Guimarães" value="Lucas Guimarães" class="vercel-input">
-              </div>
-              <div class="form-row">
-                <div class="form-group">
-                  <label for="lead-tel">Telefone WhatsApp</label>
-                  <input type="text" id="lead-tel" required placeholder="11987654321" value="11987654321" class="vercel-input">
-                </div>
-                <div class="form-group">
-                  <label for="lead-setor">Segmento (Case RAG)</label>
-                  <select id="lead-setor" class="vercel-select">
-                    <option value="b2b_saas">B2B SaaS / Tecnologia</option>
-                    <option value="imobiliario">Imobiliário</option>
-                    <option value="saude">Saúde & Clínicas</option>
-                    <option value="varejo">Varejo & E-commerce</option>
-                  </select>
-                </div>
-              </div>
-              <div class="form-group">
-                <label for="lead-data">Data e Hora da Demonstração</label>
-                <input type="datetime-local" id="lead-data" required class="vercel-input">
-              </div>
-              <button type="submit" class="btn btn-primary btn-block">
-                <span>Agendar e Disparar Confirmação (&lt; 2min)</span>
-              </button>
-            </form>
+        <div class="table-card">
+          <div class="table-toolbar">
+            <input type="text" id="crm-search" class="search-input" placeholder="Buscar por nome, empresa ou fone...">
+            <div style="display: flex; gap: 10px;">
+              <select id="crm-filter-status" class="filter-select">
+                <option value="todos">Todos os Status</option>
+                <option value="agendado">Agendado</option>
+                <option value="confirmado">Confirmado</option>
+                <option value="radar_silencio">Radar do Silêncio</option>
+                <option value="abandonou_formulario">Abandono de Formulário</option>
+                <option value="cancelado">Cancelado</option>
+              </select>
+              <button class="btn btn-secondary btn-sm" id="btn-reload-leads">↻ Recarregar</button>
+            </div>
           </div>
 
-          <!-- Tab 2: Abandono de Formulário -->
-          <div class="tab-pane" id="tab-abandono">
-            <form id="form-abandono" class="vercel-form">
-              <p class="form-tip">Simula o lead que preencheu contato no Typeform mas abandonou a tela antes da seleção do horário.</p>
-              <div class="form-group">
-                <label for="abandono-nome">Nome</label>
-                <input type="text" id="abandono-nome" required value="Fernanda Souza" class="vercel-input">
-              </div>
-              <div class="form-group">
-                <label for="abandono-tel">WhatsApp</label>
-                <input type="text" id="abandono-tel" required value="11977770000" class="vercel-input">
-              </div>
-              <button type="submit" class="btn btn-warning btn-block">
-                <span>Simular Abandono (Regra 15 min)</span>
-              </button>
-            </form>
-          </div>
-
-          <!-- Tab 3: Resposta WhatsApp do Lead -->
-          <div class="tab-pane" id="tab-resposta-lead">
-            <form id="form-resposta-lead" class="vercel-form">
-              <p class="form-tip">Simule o envio de uma mensagem de volta no WhatsApp para testar a resposta do modelo Claude Haiku e a atualização no CRM.</p>
-              <div class="form-group">
-                <label for="resp-tel">Telefone do Lead</label>
-                <input type="text" id="resp-tel" required placeholder="11987654321" value="11987654321" class="vercel-input">
-              </div>
-              <div class="form-group">
-                <label for="resp-msg">Mensagem do Lead</label>
-                <textarea id="resp-msg" rows="3" required class="vercel-textarea">Oi Nina, com certeza vou comparecer!</textarea>
-              </div>
-              <div class="quick-chips">
-                <span class="chip" data-text="Confirmado! Estarei na sala no horário certinho.">"Confirmado!"</span>
-                <span class="chip" data-text="Preciso cancelar, tive um imprevisto hoje.">"Cancelar"</span>
-                <span class="chip" data-text="Vocês integram com o ERP Totvs?">"Dúvida técnica"</span>
-              </div>
-              <button type="submit" class="btn btn-primary btn-block">
-                <span>Enviar Resposta como Lead</span>
-              </button>
-            </form>
+          <div style="overflow-x: auto;">
+            <table class="wise-table">
+              <thead>
+                <tr>
+                  <th>Nome & Empresa</th>
+                  <th>Telefone / WhatsApp</th>
+                  <th>Setor</th>
+                  <th>Closer Responsável</th>
+                  <th>Data da Reunião</th>
+                  <th>Status</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
+              <tbody id="crm-table-body">
+                <tr><td colspan="7" style="text-align: center; padding: 30px; color: var(--wise-mute);">Carregando leads do CRM...</td></tr>
+              </tbody>
+            </table>
           </div>
         </div>
-
-        <div id="sim-feedback" class="feedback-toast hidden"></div>
       </section>
+
+      <!-- ====================================================================
+           TAB 3: INBOX AO VIVO
+           ==================================================================== -->
+      <section id="tab-inbox" class="view-section">
+        <div class="view-header">
+          <div>
+            <h2>Inbox de Interação ao Vivo</h2>
+            <p>Acompanhe conversas em tempo real entre a Xena e os leads, ou intervenha como operador humano.</p>
+          </div>
+        </div>
+
+        <div class="inbox-layout">
+          <!-- Sidebar: Lista de conversas -->
+          <div class="inbox-sidebar">
+            <div class="inbox-sidebar-header">
+              <input type="text" id="inbox-search" class="search-input" style="width: 100%;" placeholder="Filtrar conversas...">
+            </div>
+            <div class="conversations-list" id="inbox-conversations-list">
+              <div style="padding: 20px; text-align: center; color: var(--wise-mute);">Carregando conversas...</div>
+            </div>
+          </div>
+
+          <!-- Main Chat Panel -->
+          <div class="chat-main">
+            <div class="chat-header">
+              <div>
+                <div style="font-weight: 800; font-size: 15px;" id="chat-header-name">Selecione um lead ao lado</div>
+                <div style="font-size: 12px; color: var(--wise-mute);" id="chat-header-sub">—</div>
+              </div>
+              <div id="chat-header-actions" style="display: none; gap: 8px;">
+                <button class="btn btn-secondary btn-sm" id="btn-open-lead-details">Ver Perfil CRM</button>
+              </div>
+            </div>
+
+            <div class="chat-messages" id="chat-messages-container">
+              <div style="display: flex; height: 100%; align-items: center; justify-content: center; color: var(--wise-mute);">
+                Clique em uma conversa na lista lateral para abrir o histórico completo.
+              </div>
+            </div>
+
+            <!-- Operator Reply Bar -->
+            <form id="chat-reply-form" class="chat-input-bar">
+              <input type="text" id="chat-reply-input" placeholder="Digite uma resposta como operador ou instrua a Xena..." disabled autocomplete="off">
+              <button type="submit" class="btn btn-dark" id="chat-reply-submit" disabled>
+                <span>Enviar via WhatsApp</span>
+              </button>
+            </form>
+          </div>
+        </div>
+      </section>
+
+      <!-- ====================================================================
+           TAB 4: EQUIPE / CLOSERS
+           ==================================================================== -->
+      <section id="tab-closers" class="view-section">
+        <div class="view-header">
+          <div>
+            <h2>Gestão de Equipe & Closers</h2>
+            <p>Cadastre os vendedores e especialistas que recebem as reuniões qualificadas pela Xena.</p>
+          </div>
+          <button class="btn btn-primary" id="btn-new-closer">
+            <span>+ Novo Closer</span>
+          </button>
+        </div>
+
+        <div class="table-card">
+          <div style="overflow-x: auto;">
+            <table class="wise-table">
+              <thead>
+                <tr>
+                  <th>Nome</th>
+                  <th>Cargo</th>
+                  <th>E-mail</th>
+                  <th>Telefone</th>
+                  <th>Link Google Meet / Sala</th>
+                  <th>Link Agenda (Cal.com)</th>
+                  <th>Status</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
+              <tbody id="closers-table-body">
+                <tr><td colspan="8" style="text-align: center; padding: 30px; color: var(--wise-mute);">Carregando closers...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ====================================================================
+           TAB 5: BASE DE CONHECIMENTO (CASES RAG)
+           ==================================================================== -->
+      <section id="tab-cases" class="view-section">
+        <div class="view-header">
+          <div>
+            <h2>Base de Conhecimento de Cases (RAG)</h2>
+            <p>Casos reais de sucesso indexados por setor. A Xena busca e cita automaticamente o case ideal para cada lead.</p>
+          </div>
+          <button class="btn btn-primary" id="btn-new-case">
+            <span>+ Novo Case</span>
+          </button>
+        </div>
+
+        <div class="table-card">
+          <div style="overflow-x: auto;">
+            <table class="wise-table">
+              <thead>
+                <tr>
+                  <th>Segmento / Setor</th>
+                  <th>Cliente</th>
+                  <th>Métrica-Chave de Impacto</th>
+                  <th>Resumo Utilizado pela Xena</th>
+                  <th>Status</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
+              <tbody id="cases-table-body">
+                <tr><td colspan="6" style="text-align: center; padding: 30px; color: var(--wise-mute);">Carregando cases...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ====================================================================
+           TAB 6: CONFIGURAÇÕES DO PRODUTO (XENA)
+           ==================================================================== -->
+      <section id="tab-config" class="view-section">
+        <div class="view-header">
+          <div>
+            <h2>Configurações do Produto Xena</h2>
+            <p>Ajuste as diretrizes da IA, regras de negócio das 6 alavancas e credenciais de integração.</p>
+          </div>
+          <div style="display: flex; gap: 10px;">
+            <button class="btn btn-secondary btn-sm" id="btn-reset-config">Restaurar Padrões</button>
+            <button class="btn btn-dark" id="btn-save-config">Salvar Configurações</button>
+          </div>
+        </div>
+
+        <div class="config-grid">
+          <!-- Coluna 1: Prompt de Sistema e Regras -->
+          <div class="wise-card">
+            <h3 style="font-size: 17px; font-weight: 800; margin-bottom: 16px;">⚔️ Personalidade & Prompt de Sistema da Xena</h3>
+            
+            <div class="form-group">
+              <label class="form-label" for="cfg-agent-name">Nome da Agente SDR</label>
+              <input type="text" id="cfg-agent-name" class="form-input" value="Xena">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="cfg-system-prompt">Prompt de Sistema (Instruções Completas)</label>
+              <textarea id="cfg-system-prompt" class="form-textarea" rows="14" placeholder="Instruções de conduta, tom de voz, gatilhos de confirmação..."></textarea>
+              <div class="form-hint">Este prompt rege o raciocínio da Xena ao conversar com os leads e gerar mensagens persuasivas.</div>
+            </div>
+
+            <h3 style="font-size: 17px; font-weight: 800; margin: 24px 0 16px;">⏱️ Timers e Gatilhos das 6 Alavancas</h3>
+            <div class="timing-inputs-grid">
+              <div class="timing-item">
+                <label>Alavanca 1: Confirmação Imediata (minutos)</label>
+                <input type="number" id="cfg-immediate-min" min="0" max="60" value="2">
+              </div>
+              <div class="timing-item">
+                <label>Alavanca 2: Lembrete D-1 (horas antes)</label>
+                <input type="number" id="cfg-d1-hours" min="12" max="48" value="24">
+              </div>
+              <div class="timing-item">
+                <label>Alavanca 3: Cerco Multicanal (minutos antes)</label>
+                <input type="number" id="cfg-cerco-min" min="1" max="120" value="5">
+              </div>
+              <div class="timing-item">
+                <label>Alavanca 4: Radar do Silêncio (horas sem resposta)</label>
+                <input type="number" id="cfg-silence-hours" min="1" max="72" value="6">
+              </div>
+              <div class="timing-item">
+                <label>Alavanca 5: Recuperação de Abandono (minutos)</label>
+                <input type="number" id="cfg-abandonment-min" min="5" max="180" value="15">
+              </div>
+              <div class="timing-item">
+                <label>Alavanca 6: No-Show Follow-up (minutos pós-call)</label>
+                <input type="number" id="cfg-noshow-min" min="5" max="180" value="15">
+              </div>
+            </div>
+          </div>
+
+          <!-- Coluna 2: Chaves de API & Webhooks -->
+          <div style="display: flex; flex-direction: column; gap: 24px;">
+            <div class="wise-card">
+              <h3 style="font-size: 17px; font-weight: 800; margin-bottom: 16px;">🔑 Credenciais & IA</h3>
+              <div class="form-group">
+                <label class="form-label" for="cfg-anthropic-key">Anthropic API Key (Claude Haiku)</label>
+                <input type="password" id="cfg-anthropic-key" class="form-input" placeholder="sk-ant-...">
+                <div class="form-hint">Fallback nativo determinístico ativo caso sem chave.</div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="cfg-elevenlabs-key">ElevenLabs API Key (Voz da Xena)</label>
+                <input type="password" id="cfg-elevenlabs-key" class="form-input" placeholder="xi-api-key...">
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="cfg-meta-token">Meta WhatsApp Cloud Token</label>
+                <input type="password" id="cfg-meta-token" class="form-input" placeholder="EAA...">
+              </div>
+            </div>
+
+            <div class="wise-card">
+              <h3 style="font-size: 17px; font-weight: 800; margin-bottom: 16px;">🔗 Endpoints de Ingestão</h3>
+              <div class="form-group">
+                <label class="form-label">Webhook de Formulário / Typeform (POST)</label>
+                <div style="display: flex; gap: 8px;">
+                  <input type="text" readonly class="form-input" value="http://localhost:3333/webhook/lead-form" id="url-webhook-lead">
+                  <button class="btn btn-secondary btn-sm" onclick="navigator.clipboard.writeText(document.getElementById('url-webhook-lead').value); showToast('Link copiado!');">Copiar</button>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Webhook WhatsApp da Meta (POST/GET)</label>
+                <div style="display: flex; gap: 8px;">
+                  <input type="text" readonly class="form-input" value="http://localhost:3333/webhook/meta-whatsapp" id="url-webhook-meta">
+                  <button class="btn btn-secondary btn-sm" onclick="navigator.clipboard.writeText(document.getElementById('url-webhook-meta').value); showToast('Link copiado!');">Copiar</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ====================================================================
+           TAB 7: SIMULADOR DE TESTES
+           ==================================================================== -->
+      <section id="tab-simulator" class="view-section">
+        <div class="view-header">
+          <div>
+            <h2>Simulador Rápido de Testes</h2>
+            <p>Execute testes ponta a ponta para verificar o comportamento da Xena e os gatilhos automáticos.</p>
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 24px;">
+          <!-- Simulação 1: Novo Agendamento -->
+          <div class="wise-card">
+            <h3 style="font-size: 16px; font-weight: 800; margin-bottom: 14px;">1. Simular Agendamento de Lead</h3>
+            <form id="sim-form-booking">
+              <div class="form-group">
+                <label class="form-label">Nome do Lead</label>
+                <input type="text" id="sim-book-name" class="form-input" value="Rodrigo Silva" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label">WhatsApp</label>
+                <input type="text" id="sim-book-phone" class="form-input" value="+5511988887777" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Empresa</label>
+                <input type="text" id="sim-book-empresa" class="form-input" value="Hospital Santa Clara">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Setor</label>
+                <select id="sim-book-setor" class="form-select">
+                  <option value="saude">Saúde / Clínicas</option>
+                  <option value="imobiliario">Imobiliário</option>
+                  <option value="b2b_saas">B2B SaaS</option>
+                </select>
+              </div>
+              <button type="submit" class="btn btn-primary" style="width: 100%;">
+                <span>Disparar Agendamento</span>
+              </button>
+            </form>
+          </div>
+
+          <!-- Simulação 2: Abandono de Formulário -->
+          <div class="wise-card">
+            <h3 style="font-size: 16px; font-weight: 800; margin-bottom: 14px;">2. Simular Abandono de Formulário</h3>
+            <form id="sim-form-abandon">
+              <div class="form-group">
+                <label class="form-label">Nome</label>
+                <input type="text" id="sim-abandon-name" class="form-input" value="Camila Albuquerque" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label">WhatsApp</label>
+                <input type="text" id="sim-abandon-phone" class="form-input" value="+5511977776666" required>
+              </div>
+              <button type="submit" class="btn btn-secondary" style="width: 100%; margin-top: 50px;">
+                <span>Simular Abandono</span>
+              </button>
+            </form>
+          </div>
+
+          <!-- Simulação 3: Resposta do Lead via WhatsApp -->
+          <div class="wise-card">
+            <h3 style="font-size: 16px; font-weight: 800; margin-bottom: 14px;">3. Simular Lead Respondendo no WhatsApp</h3>
+            <form id="sim-form-inbound">
+              <div class="form-group">
+                <label class="form-label">WhatsApp do Lead</label>
+                <input type="text" id="sim-inbound-phone" class="form-input" value="+5511988887777" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Mensagem Digitada pelo Lead</label>
+                <textarea id="sim-inbound-msg" class="form-textarea" rows="3" required>Sim, com certeza vou estar na reunião amanhã!</textarea>
+              </div>
+              <button type="submit" class="btn btn-dark" style="width: 100%;">
+                <span>Enviar Resposta para a Xena</span>
+              </button>
+            </form>
+          </div>
+        </div>
+      </section>
+
     </main>
 
-    <!-- Vercel Clean Footer -->
-    <footer class="vercel-footer">
-      <div class="footer-content">
-        <div class="footer-left">
-          <svg class="vercel-triangle-sm" width="14" height="12" viewBox="0 0 76 65" fill="currentColor"><path d="M37.5274 0L75.0548 65H0L37.5274 0Z"/></svg>
-          <span>Nina SDR IA • Design System inspired by Vercel Geist</span>
-        </div>
-        <div class="footer-right">
-          <span class="mono-text">Supabase + Claude Haiku + Meta Cloud API + ElevenLabs</span>
-        </div>
-      </div>
+    <!-- Footer -->
+    <footer style="background-color: white; border-top: 1px solid var(--wise-border); padding: 18px 24px; text-align: center; font-size: 12px; color: var(--wise-mute);">
+      Xena SDR IA • Arquitetura Anti No-Show • Wise Design System
     </footer>
   </div>
+
+  <!-- ====================================================================
+       MODAL: ADICIONAR / EDITAR CLOSER
+       ==================================================================== -->
+  <div class="modal-backdrop" id="modal-closer">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 id="modal-closer-title">Cadastrar Novo Closer</h3>
+        <button class="close-btn" onclick="closeModal('modal-closer')">&times;</button>
+      </div>
+      <form id="form-closer">
+        <input type="hidden" id="closer-id">
+        <div class="form-group">
+          <label class="form-label">Nome Completo</label>
+          <input type="text" id="closer-nome" class="form-input" required placeholder="Ex: Lucas Santos">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Cargo</label>
+          <input type="text" id="closer-cargo" class="form-input" value="Especialista Comercial">
+        </div>
+        <div class="form-group">
+          <label class="form-label">E-mail</label>
+          <input type="email" id="closer-email" class="form-input" placeholder="lucas@empresa.com.br">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Telefone</label>
+          <input type="text" id="closer-telefone" class="form-input" placeholder="+5511999991111">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Link da Sala (Google Meet / Zoom)</label>
+          <input type="url" id="closer-sala" class="form-input" required placeholder="https://meet.google.com/xyz-demo">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Link da Agenda (Cal.com / Calendly)</label>
+          <input type="url" id="closer-agenda" class="form-input" placeholder="https://cal.com/lucas-santos">
+        </div>
+        <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 24px;">
+          <button type="button" class="btn btn-secondary" onclick="closeModal('modal-closer')">Cancelar</button>
+          <button type="submit" class="btn btn-primary">Salvar Closer</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ====================================================================
+       MODAL: ADICIONAR / EDITAR CASE
+       ==================================================================== -->
+  <div class="modal-backdrop" id="modal-case">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 id="modal-case-title">Adicionar Case de Sucesso</h3>
+        <button class="close-btn" onclick="closeModal('modal-case')">&times;</button>
+      </div>
+      <form id="form-case">
+        <input type="hidden" id="case-id">
+        <div class="form-group">
+          <label class="form-label">Segmento / Setor</label>
+          <input type="text" id="case-segmento" class="form-input" required placeholder="Ex: saude, imobiliario, b2b_saas, varejo">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Nome do Cliente</label>
+          <input type="text" id="case-cliente" class="form-input" required placeholder="Ex: Clínica Vida Ativa">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Métrica-Chave de Impacto</label>
+          <input type="text" id="case-metrica" class="form-input" required placeholder="Ex: Redução de 70% no no-show de consultas">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Resumo do Case (Pitch para a Xena citar)</label>
+          <textarea id="case-resumo" class="form-textarea" rows="3" required placeholder="Ex: A Clínica Vida Ativa reduziu faltas em 70% usando confirmações humanizadas no WhatsApp."></textarea>
+        </div>
+        <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 24px;">
+          <button type="button" class="btn btn-secondary" onclick="closeModal('modal-case')">Cancelar</button>
+          <button type="submit" class="btn btn-primary">Salvar Case</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="toast">Mensagem da Xena</div>
 
   <script src="app.js"></script>
 </body>

@@ -67,7 +67,7 @@ export function loadConfig(): AppConfig {
     meta: {
       whatsappToken: whatsappToken,
       phoneNumberId: process.env.META_PHONE_NUMBER_ID || '',
-      verifyToken: process.env.META_VERIFY_TOKEN || 'nina_verify_token',
+      verifyToken: process.env.META_VERIFY_TOKEN || 'xena_verify_token',
       isConfigured: Boolean(whatsappToken && !whatsappToken.includes('your-meta')),
     },
     elevenlabs: {
@@ -77,7 +77,7 @@ export function loadConfig(): AppConfig {
     },
     email: {
       resendApiKey: resendKey,
-      from: process.env.EMAIL_FROM || 'Nina <nina@empresa.com.br>',
+      from: process.env.EMAIL_FROM || 'Xena <xena@empresa.com.br>',
       isConfigured: Boolean(resendKey && !resendKey.includes('your-resend')),
     },
     sms: {

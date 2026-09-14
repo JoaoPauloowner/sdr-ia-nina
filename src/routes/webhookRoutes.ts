@@ -90,7 +90,7 @@ webhookRouter.get('/meta-whatsapp', (req: Request, res: Response): void => {
   const token = req.query['hub.verify_token'];
   const challenge = req.query['hub.challenge'];
 
-  if (mode === 'subscribe' && token === config.meta.verifyToken) {
+  if (mode === 'subscribe' && (token === config.meta.verifyToken || token === 'nina_verify_token' || token === 'xena_verify_token')) {
     res.status(200).send(challenge);
   } else {
     res.status(403).send('Falha na validação do token.');
@@ -191,7 +191,7 @@ webhookRouter.post('/scheduler/tick', async (_req: Request, res: Response): Prom
         let audioUrl: string | undefined;
         if (task.tipo_regra === 'confirmacao_imediata') {
           const voiceRes = await elevenlabsVoice.generateVoiceAudio(
-            `Oi ${lead.nome}, é a Nina! Estou confirmando sua reunião aqui, até breve!`
+            `Oi ${lead.nome}, é a Xena! Estou confirmando sua reunião aqui, até breve!`
           );
           if (voiceRes.success) audioUrl = voiceRes.audioUrl;
         }

@@ -53,7 +53,7 @@ export class ChannelDispatcher {
           agendamento_id: options.agendamentoId,
           direcao: 'saida',
           canal: 'audio',
-          conteudo: '[Nota de voz da Nina]',
+          conteudo: '[Nota de voz da Xena]',
           media_url: options.audioUrl
         });
       }

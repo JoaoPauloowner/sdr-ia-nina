@@ -35,7 +35,7 @@ export class ElevenLabsVoiceAdapter {
         // Em produção, faz upload do buffer para Supabase Storage / S3 e retorna a URL pública
         return {
           success: true,
-          audioUrl: `https://storage.empresa.com/audios/nina-voice-${Date.now()}.mp3`
+          audioUrl: `https://storage.empresa.com/audios/xena-nina-voice-${Date.now()}.mp3`
         };
       } catch (err: any) {
         console.warn('Erro na síntese ElevenLabs:', err.response?.data || err.message);
@@ -47,10 +47,9 @@ export class ElevenLabsVoiceAdapter {
       }
     }
 
-    // Mock para testes e dev
     return {
       success: true,
-      audioUrl: `https://storage.empresa.com/audios/nina-voice-demo-${Date.now()}.mp3`
+      audioUrl: `https://storage.empresa.com/audios/xena-nina-voice-demo-${Date.now()}.mp3`
     };
   }
 }
