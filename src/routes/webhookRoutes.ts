@@ -7,6 +7,7 @@ import { ninaAgent } from '../ai/ninaAgent.js';
 import { channelDispatcher } from '../channels/channelDispatcher.js';
 import { elevenlabsVoice } from '../channels/elevenlabsVoice.js';
 import { FilaAgendamento } from '../types/index.js';
+import { runSchedulerTick } from '../services/schedulerWorker.js';
 
 export const webhookRouter = Router();
 
@@ -162,54 +163,11 @@ webhookRouter.post('/meta-whatsapp', async (req: Request, res: Response): Promis
  */
 webhookRouter.post('/scheduler/tick', async (_req: Request, res: Response): Promise<void> => {
   try {
-    // 1. Verifica Radar do Silêncio
-    const silenciosos = await rulesEngine.checkSilenceRadar();
-
-    // 2. Processa Fila de Disparos
-    const processados = await rulesEngine.processPendingQueue(new Date(), async (task: FilaAgendamento) => {
-      const lead = await leadService.getLeadById(task.lead_id);
-      if (!lead) return;
-
-      const mensagem = await ninaAgent.generateOutboundMessage({
-        leadId: task.lead_id,
-        agendamentoId: task.agendamento_id,
-        tipoRegra: task.tipo_regra
-      });
-
-      // Se for cerco de 5 minutos, faz disparo simultâneo multicanal
-      if (task.tipo_regra === 'cerco_5m') {
-        await channelDispatcher.dispatchMultiChannel({
-          leadId: lead.id,
-          leadNome: lead.nome,
-          telefone: lead.telefone,
-          email: lead.email,
-          mensagem: mensagem,
-          agendamentoId: task.agendamento_id
-        });
-      } else {
-        // Disparo WhatsApp com áudio opcional
-        let audioUrl: string | undefined;
-        if (task.tipo_regra === 'confirmacao_imediata') {
-          const voiceRes = await elevenlabsVoice.generateVoiceAudio(
-            `Oi ${lead.nome}, é a Xena! Estou confirmando sua reunião aqui, até breve!`
-          );
-          if (voiceRes.success) audioUrl = voiceRes.audioUrl;
-        }
-
-        await channelDispatcher.sendWhatsApp({
-          leadId: lead.id,
-          telefone: lead.telefone,
-          mensagem: mensagem,
-          audioUrl,
-          agendamentoId: task.agendamento_id
-        });
-      }
-    });
-
+    const result = await runSchedulerTick();
     res.status(200).json({
       success: true,
-      silenciososDetectados: silenciosos.length,
-      processados: processados.length
+      silenciososDetectados: result.silenciososDetectados,
+      processados: result.processados
     });
   } catch (err: any) {
     res.status(500).json({ error: err.message });

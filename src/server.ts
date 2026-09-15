@@ -5,6 +5,7 @@ import { fileURLToPath } from 'url';
 import { config } from './config/index.js';
 import { webhookRouter } from './routes/webhookRoutes.js';
 import { dashboardRouter } from './routes/dashboardRoutes.js';
+import { startSchedulerWorker } from './services/schedulerWorker.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -41,5 +42,8 @@ if (process.env.NODE_ENV !== 'test') {
     console.log(`📊 Painel Operacional: http://localhost:${PORT}`);
     console.log(`🔗 Webhook Leads: http://localhost:${PORT}/webhook/lead-form`);
     console.log(`💬 Webhook WhatsApp: http://localhost:${PORT}/webhook/meta-whatsapp\n`);
+
+    // Inicia o motor autônomo da fila (tick a cada 30 segundos)
+    startSchedulerWorker(30000);
   });
 }
