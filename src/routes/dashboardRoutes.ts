@@ -2,8 +2,12 @@ import { Router, Request, Response } from 'express';
 import { getDatabase } from '../database/supabase.js';
 import { configService } from '../services/configService.js';
 import { whatsappMeta } from '../channels/whatsappMeta.js';
+import { requireAdminAuth } from '../middleware/authMiddleware.js';
 
 export const dashboardRouter = Router();
+
+// Aplica autenticação administrativa nas rotas de dashboard
+dashboardRouter.use(requireAdminAuth);
 
 // ==========================================
 // 1. MÉTRICAS E VISÃO GERAL

@@ -8,8 +8,12 @@ import { channelDispatcher } from '../channels/channelDispatcher.js';
 import { elevenlabsVoice } from '../channels/elevenlabsVoice.js';
 import { FilaAgendamento } from '../types/index.js';
 import { runSchedulerTick } from '../services/schedulerWorker.js';
+import { createRateLimiter, verifyMetaSignature } from '../middleware/authMiddleware.js';
 
 export const webhookRouter = Router();
+
+// Rate limiter para proteger o recebimento público de formulários contra DoS/Spam
+const leadFormRateLimiter = createRateLimiter(60, 60000);
 
 /**
  * Webhook de Formulário (Tipo Typeform)
@@ -17,6 +21,9 @@ export const webhookRouter = Router();
  */
 webhookRouter.post('/lead-form', async (req: Request, res: Response): Promise<void> => {
   try {
+    // Executa verificação de taxa de requisições
+    leadFormRateLimiter(req, res, () => {});
+    if (res.headersSent) return;
     const { nome, telefone, email, empresa, cargo, setor, data_hora_reuniao, closer_id, abandono } = req.body;
 
     if (!nome || !telefone) {
@@ -104,6 +111,16 @@ webhookRouter.get('/meta-whatsapp', (req: Request, res: Response): void => {
 webhookRouter.post('/meta-whatsapp', async (req: Request, res: Response): Promise<void> => {
   try {
     const body = req.body;
+
+    // Validação criptográfica HMAC SHA-256 (Meta Cloud API)
+    const signature = req.headers['x-hub-signature-256'] as string | undefined;
+    if (config.security.metaAppSecret && signature) {
+      const isValid = verifyMetaSignature(JSON.stringify(body), signature, config.security.metaAppSecret);
+      if (!isValid) {
+        res.status(403).json({ error: 'Assinatura criptográfica HMAC inválida.' });
+        return;
+      }
+    }
 
     // Extrai mensagem seja do formato complexo da Meta ou formato simplificado
     let fromPhone = '';

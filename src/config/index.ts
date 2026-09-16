@@ -40,6 +40,11 @@ export interface AppConfig {
     formAbandonmentMinutes: number;
     silenceRadarHours: number;
   };
+  security: {
+    adminApiKey: string;
+    dashboardPassword: string;
+    metaAppSecret: string;
+  };
 }
 
 export function loadConfig(): AppConfig {
@@ -89,6 +94,11 @@ export function loadConfig(): AppConfig {
     rules: {
       formAbandonmentMinutes: parseInt(process.env.FORM_ABANDONMENT_MINUTES || '15', 10),
       silenceRadarHours: parseInt(process.env.SILENCE_RADAR_HOURS || '6', 10),
+    },
+    security: {
+      adminApiKey: process.env.ADMIN_API_KEY || '',
+      dashboardPassword: process.env.DASHBOARD_PASSWORD || '',
+      metaAppSecret: process.env.META_APP_SECRET || '',
     },
   };
 }
